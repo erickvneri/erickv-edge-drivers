@@ -1,1 +1,0 @@
-# samjin-switch-power

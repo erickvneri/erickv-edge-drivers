@@ -1,0 +1,4 @@
+name: "zigbee-switch-power"
+packageKey: "zigbee-switch-power"
+permissions:
+  zigbee: {}
