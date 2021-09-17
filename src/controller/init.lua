@@ -3,6 +3,7 @@ local OnOff = clusters.OnOff
 local SimpleMetering = clusters.SimpleMetering
 local PowerConfiguration = clusters.PowerConfiguration
 
+local data_types = require 'st.zigbee.data_types'
 local caps = require 'st.capabilities'
 local log = require 'log'
 
@@ -69,6 +70,8 @@ local function handle_onoff_update(_, device, command, zb_rx)
   -- Platform event
   device:emit_event_for_endpoint(endpoint, onoff)
 end
+
+
 ---------------------------------------------
 ---- Controller SubDriver & Configuration----
 local onoff_cluster_config = {
@@ -76,7 +79,7 @@ local onoff_cluster_config = {
   attribute=OnOff.attributes.OnOff.ID,
   minimum_interval=0,
   maximum_interval=300,
-  data_type=require('st.zigbee.data_types').Boolean,
+  data_type=data_types.Boolean,
   monitored=true
 }
 
@@ -88,6 +91,7 @@ local controller_subdriver = {
   can_handle = is_supported,
   zigbee_handlers = {
     attr = {
+      -- Switch
       [OnOff.ID] = {
         [OnOff.attributes.OnOff.ID] = handle_onoff_update
       }

@@ -30,7 +30,12 @@ local function do_configure(driver, device)
   log.info('>> DO_CONFIGURE CATCHED')
   device:refresh()
 
-  -- Bind Request for Reporting
+  -- [[
+  -- Bind reporting request
+  -- for capabilities:
+  --   - Switch
+  --   - PowerMeter  TODO: IMPLEMENT PROPER POWER METER CLUSTER
+  -- ]]
   device:send(device_mgmt.build_bind_request(device, OnOff.ID, driver.environment_info.hub_zigbee_eui))
 
   -- configure
