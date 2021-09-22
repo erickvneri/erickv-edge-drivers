@@ -31,27 +31,39 @@ local function do_configure(driver, device)
   device:refresh()
 
   -- [[
-  --    OnOff (Switch)
-  --    Attr Configuration
+  --    OnOff (Switch) Configuration
   --      - Bind Request
+  --      - Report Configuration
   --      - Fetch current state
   -- ]]
   device:send(device_mgmt.build_bind_request(
     device,
     OnOff.ID,
     driver.environment_info.hub_zigbee_eui))
+
+  device:send(
+    OnOff
+    .attributes
+    .OnOff:configure_reporting(device,0,300))
+
   device:send(OnOff.attributes.OnOff:read(device))
 
   -- [[
-  --    ElectricalMeasurement (Power Meter)
-  --    Attr Configuration
+  --    ElectricalMeasurement (Power Meter) Configuration
   --      - Bind Request
+  --      - Report Configuration
   --      - Fetch current state
   -- ]]
   device:send(device_mgmt.build_bind_request(
     device,
     ElectricalMeasurement.ID,
     driver.environment_info.hub_zigbee_eui))
+
+  device:send(
+    ElectricalMeasurement
+    .attributes
+    .ActivePower:configure_reporting(device,0,300,1))
+
   device:send(ElectricalMeasurement.attributes.ActivePower:read(device))
 
   -- configure
