@@ -4,7 +4,7 @@ local device_mgmt = require 'st.zigbee.device_management'
 
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
-local SimpleMetering = clusters.SimpleMetering
+local ElectricalMeasurement = clusters.ElectricalMeasurement
 
 
 ---------------------------------------
@@ -27,23 +27,39 @@ end
 -- ]]
 
 local function do_configure(driver, device)
-  log.info('>> DO_CONFIGURE CATCHED')
+  log.info('>> [DO_CONFIGURE]')
   device:refresh()
 
   -- [[
-  -- Bind reporting request
-  -- for capabilities:
-  --   - Switch
-  --   - PowerMeter  TODO: IMPLEMENT PROPER POWER METER CLUSTER
+  --    OnOff (Switch)
+  --    Attr Configuration
+  --      - Bind Request
+  --      - Fetch current state
   -- ]]
-  device:send(device_mgmt.build_bind_request(device, OnOff.ID, driver.environment_info.hub_zigbee_eui))
+  device:send(device_mgmt.build_bind_request(
+    device,
+    OnOff.ID,
+    driver.environment_info.hub_zigbee_eui))
+  device:send(OnOff.attributes.OnOff:read(device))
+
+  -- [[
+  --    ElectricalMeasurement (Power Meter)
+  --    Attr Configuration
+  --      - Bind Request
+  --      - Fetch current state
+  -- ]]
+  device:send(device_mgmt.build_bind_request(
+    device,
+    ElectricalMeasurement.ID,
+    driver.environment_info.hub_zigbee_eui))
+  device:send(ElectricalMeasurement.attributes.ActivePower:read(device))
 
   -- configure
   device:configure()
 end
 
 local function device_init(driver, device)
-  log.info('>> DEVICE_INIT CALLED')
+  log.info('>> [DEVICE_INIT]')
   device:set_component_to_endpoint_fn(component_to_endpoint)
   device:set_endpoint_to_component_fn(endpoint_to_component)
 
