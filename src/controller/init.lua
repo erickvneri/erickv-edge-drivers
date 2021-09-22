@@ -81,10 +81,6 @@ end
 ---- Controller SubDriver ----
 local controller_subdriver = {
   NAME = 'controller',
-  --cluster_configuration = {
-    --[caps.switch.ID] = attr_config.onoff_cluster_config,
-    --[caps.powerMeter.ID] = attr_config.power_cluster_config
-  --},
   can_handle = is_supported,
   zigbee_handlers = {
     attr = {
