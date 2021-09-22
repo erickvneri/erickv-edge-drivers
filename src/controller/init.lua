@@ -4,9 +4,6 @@ local ElectricalMeasurement = clusters.ElectricalMeasurement
 
 local caps = require 'st.capabilities'
 local log = require 'log'
---
--- SubDriver attribute configurations
-local attr_config = require 'controller.attr_config'
 
 -- Pretty printer
 local pprint = function(msg)
@@ -73,8 +70,8 @@ end
 
 local function handle_power_remote(_, device, command, zb_rx)
   log.info('>> [EXTERNAL_REPORT] ElectricalMeasurement ZigbeeMessageRx received')
-  --local endpoint = zb_rx.address_header.src_endpoint.value
-  local endpoint = device:get_endpoint_for_component_id('power')
+  local endpoint = zb_rx.address_header.src_endpoint.value
+  --local endpoint = device:get_endpoint_for_component_id('power')
 
   -- Platform event
   device:emit_event_for_endpoint(endpoint, caps.powerMeter.power(command.value / 10))
@@ -84,10 +81,10 @@ end
 ---- Controller SubDriver ----
 local controller_subdriver = {
   NAME = 'controller',
-  cluster_configuration = {
-    [caps.switch.ID] = attr_config.onoff_cluster_config,
-    [caps.powerMeter.ID] = attr_config.power_cluster_config
-  },
+  --cluster_configuration = {
+    --[caps.switch.ID] = attr_config.onoff_cluster_config,
+    --[caps.powerMeter.ID] = attr_config.power_cluster_config
+  --},
   can_handle = is_supported,
   zigbee_handlers = {
     attr = {
