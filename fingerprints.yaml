@@ -1,6 +1,6 @@
 zigbeeManufacturer:
   - id: "Samjin/outlet"
-    deviceLabel: "SmartThings Outlet"
+    deviceLabel: "Samjin Outlet"
     manufacturer: "Samjin"
     model: "outlet"
     deviceProfileName: switch-power
