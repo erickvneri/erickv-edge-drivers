@@ -25,6 +25,6 @@ local zigbee_switch_power_template = {
 }
 
 local zigbee_switch_power_driver =
-  ZigbeeDriver("zigbee_switch_power", zigbee_switch_power_template)
+  ZigbeeDriver("samjin_switch_power", zigbee_switch_power_template)
 -------------------------- Driver Execute --------------------------
 zigbee_switch_power_driver:run()
