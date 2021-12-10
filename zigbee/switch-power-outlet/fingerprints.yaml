@@ -1,6 +1,14 @@
 zigbeeManufacturer:
+  # Samjin/SmartThings Outlet
   - id: "Samjin/outlet"
     deviceLabel: "Samjin Outlet"
     manufacturer: "Samjin"
     model: "outlet"
     deviceProfileName: switch-power
+
+  # Sonoff Outlet
+  - id: "SONOFF/S31 Lite zb"
+    deviceLabel: "Sonoff Outlet"
+    manufacturer: "SONOFF"
+    model: "S31 Lite zb"
+    deviceProfileName: switch

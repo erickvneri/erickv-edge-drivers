@@ -5,17 +5,12 @@ local ElectricalMeasurement = clusters.ElectricalMeasurement
 local caps = require 'st.capabilities'
 local log = require 'log'
 
--- Pretty printer
-local pprint = function(msg)
-  local pp = require 'st.utils'.stringify_table
-  log.debug(pp(msg))
-end
-
 
 ---------------------------
 ---- SUPPORTED DEVICES ----
 local SUPPORTED_FINGERPRINTS = {
-  { mn='Samjin', model='outlet' }
+  { mn='Samjin', model='outlet' },
+  { mn='SONOFF', model='S31 Lite zb' }
 }
 
 
@@ -24,39 +19,36 @@ local SUPPORTED_FINGERPRINTS = {
 local function is_supported (opts, driver, device)
   local mn = device:get_manufacturer()
   local model = device:get_model()
-  log.info('>> [VALIDATE FINGERPRINT] manufacturer: '..mn..', model: '..model)
+  log.info('>> [VALIDATE FINGERPRINT] Manufacturer: '..mn..', Model: '..model)
 
   for _, fingerprint in ipairs(SUPPORTED_FINGERPRINTS) do
     if mn == fingerprint.mn then
       if model == fingerprint.model then
-        log.info('>> [SUCCESS] FINGERPRINT SUPPORTED')
+        log.info('>> [SUCCESS] Fingerprint supported')
         return true
       end
     end
   end
-  log.error('>> [ERROR] FINGERPRINT NOT SUPPORTED')
+  log.error('>> [ERROR] Fingerprint not supported - unpair device and try again')
   return false
 end
 
 
 --------------------------------------
 ---- Device Capability Controllers ----
-local function onoff_handler(driver, device, command)
+local function onoff_handler(_, device, command)
   log.debug('>> [APP_REPORT] OnOff ZigbeeMessageTx sent')
 
   local endpoint = device:get_endpoint_for_component_id(command.component)
 
   if command.command == 'on' then
-    -- Platform command
     device:emit_event_for_endpoint(endpoint, caps.switch.switch.on())
-    -- Zigbee command
     device:send(OnOff.server.commands.On(device):to_endpoint(endpoint))
-  else
-    -- Platform command
-    device:emit_event_for_endpoint(endpoint, caps.switch.switch.off())
-    -- Zigbee command
-    device:send(OnOff.server.commands.Off(device):to_endpoint(endpoint))
+    return
   end
+  device:emit_event_for_endpoint(endpoint, caps.switch.switch.off())
+  device:send(OnOff.server.commands.Off(device):to_endpoint(endpoint))
+  return
 end
 
 local function handle_onoff_remote(_, device, command, zb_rx)
@@ -76,6 +68,7 @@ local function handle_power_remote(_, device, command, zb_rx)
   -- Platform event
   device:emit_event_for_endpoint(endpoint, caps.powerMeter.power(command.value / 10))
 end
+
 
 ------------------------------
 ---- Controller SubDriver ----
@@ -100,7 +93,7 @@ local controller_subdriver = {
       [caps.switch.commands.off.NAME] = onoff_handler
     },
     [caps.refresh.ID] = {
-      [caps.refresh.commands.refresh.NAME] = function(driver, device)
+      [caps.refresh.commands.refresh.NAME] = function(_, device)
         device:refresh()
       end
     }
