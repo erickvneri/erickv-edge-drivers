@@ -16,11 +16,11 @@ local zigbee_switch_power_template = {
     init = device_init,
     doConfigure = do_configure
   },
-  sub_drivers = { require('switch-controller') },
+  sub_drivers = { require('controller') },
 }
 
 local zigbee_switch_power_driver =
-  ZigbeeDriver("samjin_switch_power", zigbee_switch_power_template)
+  ZigbeeDriver("switch_power_outlet", zigbee_switch_power_template)
 
 -------------------------- Driver Execute --------------------------
 zigbee_switch_power_driver:run()

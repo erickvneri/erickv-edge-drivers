@@ -9,30 +9,16 @@ local log = require 'log'
 ---------------------------
 ---- SUPPORTED DEVICES ----
 local SUPPORTED_FINGERPRINTS = {
-  { mn='Samjin', model='outlet' },
-  { mn='SONOFF', model='S31 Lite zb' }
+  ['Samjin']='outlet',
+  ['SONOFF']='S31 Lite zb'
 }
-
 
 ------------------------------
 ---- OAuth-like interface ----
 local function is_supported (opts, driver, device)
   local mn = device:get_manufacturer()
-  local model = device:get_model()
-  log.info('>> [VALIDATE FINGERPRINT] Manufacturer: '..mn..', Model: '..model)
-
-  for _, fingerprint in ipairs(SUPPORTED_FINGERPRINTS) do
-    if mn == fingerprint.mn then
-      if model == fingerprint.model then
-        log.info('>> [SUCCESS] Fingerprint supported')
-        return true
-      end
-    end
-  end
-  log.error('>> [ERROR] Fingerprint not supported - unpair device and try again')
-  return false
+  return assert(SUPPORTED_FINGERPRINTS[mn]) == device:get_model() and 1 or nil
 end
-
 
 --------------------------------------
 ---- Device Capability Controllers ----
@@ -68,7 +54,6 @@ local function handle_power_remote(_, device, command, zb_rx)
   -- Platform event
   device:emit_event_for_endpoint(endpoint, caps.powerMeter.power(command.value / 10))
 end
-
 
 ------------------------------
 ---- Controller SubDriver ----
