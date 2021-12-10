@@ -25,46 +25,46 @@ end
 --   - init
 --   - doConfigure
 -- ]]
-
 local function do_configure(driver, device)
   log.info('>> [DO_CONFIGURE]')
+
+  -- In order to wake device
   device:refresh()
 
-  -- [[
-  --    OnOff (Switch) Configuration
-  --      - Bind Request
-  --      - Report Configuration
-  --      - Fetch current state
-  -- ]]
-  device:send(device_mgmt.build_bind_request(
+  local function configure_reporting_by_cluster(device, driver, cluster, attribute)
+    -- [[
+    --  Generates cluster binding and reporting
+    --  and ends by reading cluster to propagate
+    --  state accordingly.
+    --   - Bind Request
+    --   - Report Configuration
+    --   - Fetch current state
+    -- ]]
+    device:send(device_mgmt.build_bind_request(
+      device,
+      cluster.ID,
+      driver.environment_info.hub_zigbee_eui))
+
+    device:send(attribute:configure_reporting(device,0,300,1))
+
+    device:send(attribute:read(device))
+  end
+
+  log.debug('CONFIGURE ONOFF')
+  assert(device:supports_capability_by_id(caps.switch.ID), 'switch not supported')
+  configure_reporting_by_cluster(
     device,
-    OnOff.ID,
-    driver.environment_info.hub_zigbee_eui))
+    driver,
+    OnOff,
+    OnOff.attributes.OnOff)
 
-  device:send(
-    OnOff
-    .attributes
-    .OnOff:configure_reporting(device,0,300))
-
-  device:send(OnOff.attributes.OnOff:read(device))
-
-  -- [[
-  --    ElectricalMeasurement (Power Meter) Configuration
-  --      - Bind Request
-  --      - Report Configuration
-  --      - Fetch current state
-  -- ]]
-  device:send(device_mgmt.build_bind_request(
+  log.debug('CONFIGURE POWER METER')
+  assert(device:supports_capability_by_id(caps.powerMeter.ID), 'powerMeter not supported')
+  configure_reporting_by_cluster(
     device,
-    ElectricalMeasurement.ID,
-    driver.environment_info.hub_zigbee_eui))
-
-  device:send(
-    ElectricalMeasurement
-    .attributes
-    .ActivePower:configure_reporting(device,0,300,1))
-
-  device:send(ElectricalMeasurement.attributes.ActivePower:read(device))
+    driver,
+    ElectricalMeasurement,
+    ElectricalMeasurement.attributes.ActivePower)
 
   -- configure
   device:configure()
