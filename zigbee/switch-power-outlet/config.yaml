@@ -1,4 +1,4 @@
-name: "samjin-switch-power"
-packageKey: "samjin-switch-power"
+name: "Switch/Power Outlet"
+packageKey: "switch-power-outlet"
 permissions:
   zigbee: {}
