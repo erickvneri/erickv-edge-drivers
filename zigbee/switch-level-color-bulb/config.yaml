@@ -1,0 +1,4 @@
+name: "Switch/Level/Color Bulb"
+packageKey: "switch-level-color-bulb"
+permissions:
+  zigbee: {}

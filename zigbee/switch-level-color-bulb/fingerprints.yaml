@@ -1,0 +1,7 @@
+zigbeeManufacturer:
+  # Sengled
+  - id: "sengled/E11-G13"
+    deviceLabel: "Sengled E11-G13"
+    manufacturer: "sengled"
+    model: "E11-G13"
+    deviceProfileName: switch-level
