@@ -9,6 +9,9 @@ local ElectricalMeasurement = clusters.ElectricalMeasurement
 
 ---------------------------------------
 ---- Endpoint to Component parsers ----
+----- FIXME: Must improve in case driver
+----- matches multi-component devices,
+----- e.g. power strips.
 local function component_to_endpoint(_, component_id)
   return component_id == 'main' and 1 or 2
 end
@@ -50,16 +53,24 @@ local function do_configure(driver, device)
     device:send(attribute:read(device))
   end
 
-  log.debug('CONFIGURE ONOFF')
-  assert(device:supports_capability_by_id(caps.switch.ID), 'switch not supported')
+
+  --[[
+  -- Initialize configure_reporting setup
+  --]]
+  assert(
+    device:supports_capability_by_id(caps.switch.ID),
+    'Won\'t configure reporting as device doesn\'t support <Switch> capability')
+  -- configure_reporting
   configure_reporting_by_cluster(
     device,
     driver,
     OnOff,
     OnOff.attributes.OnOff)
 
-  log.debug('CONFIGURE POWER METER')
-  assert(device:supports_capability_by_id(caps.powerMeter.ID), 'powerMeter not supported')
+  assert(
+    device:supports_capability_by_id(caps.powerMeter.ID),
+    'Won\'t configure_reporting as device doesn\'t support <PowerMeter> capability')
+  -- configure_reporting
   configure_reporting_by_cluster(
     device,
     driver,
