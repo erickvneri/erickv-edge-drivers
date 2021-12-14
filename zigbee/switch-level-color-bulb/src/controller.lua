@@ -1,7 +1,11 @@
 local caps = require 'st.capabilities'
 local dtypes = require 'st.zigbee.data_types'
 local clusters = require 'st.zigbee.zcl.clusters'
+
+-- OnOff abstractions
 local OnOff = clusters.OnOff
+local On = OnOff.server.commands.On
+local Off = OnOff.server.commands.Off
 
 -- Level abstractions
 local Level = clusters.Level
@@ -20,10 +24,8 @@ local controller = {}
 -- ]]
 function controller.onoff_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
-  local attr = OnOff.server.commands
+  local onoff = command.command == 'on' and On or Off
 
-  -- Define command
-  local onoff = command.command == 'on' and attr.On or attr.Off
   return device:send(onoff(device):to_endpoint(ep))
 end
 
