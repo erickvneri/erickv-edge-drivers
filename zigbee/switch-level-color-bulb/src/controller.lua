@@ -19,7 +19,6 @@ local controller = {}
 -- SmartApp, etc)
 -- ]]
 function controller.onoff_handler(_, device, command)
-  log.debug('>> [APP_REPORT] OnOff ZigbeeMessageTx sent')
   local ep = device:get_endpoint_for_component_id(command.component)
   local attr = OnOff.server.commands
 
@@ -55,7 +54,6 @@ end
 -- configured reporting for OnOff.OnOff
 -- ]]
 function controller.handle_onoff_remote(_, device, command, zb_rx)
-  log.debug('>> [EXTERNAL_REPORT] OnOff ZigbeeMessageRx received')
   local endpoint = zb_rx.address_header.src_endpoint.value
   local onoff = command.value and caps.switch.switch.on() or caps.switch.switch.off()
 
