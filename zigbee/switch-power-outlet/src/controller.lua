@@ -1,7 +1,6 @@
 local caps = require 'st.capabilities'
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
-local log = require 'log'
 
 local controller = {}
 
@@ -11,7 +10,6 @@ local controller = {}
 -- SmartApp, etc)
 -- ]]
 function controller.onoff_handler(_, device, command)
-  log.debug('>> [APP_REPORT] OnOff ZigbeeMessageTx sent')
   local ep = device:get_endpoint_for_component_id(command.component)
   local attr = OnOff.server.commands
 
@@ -25,7 +23,6 @@ end
 -- configured reporting for OnOff.OnOff
 -- ]]
 function controller.handle_onoff_remote(_, device, command, zb_rx)
-  log.debug('>> [EXTERNAL_REPORT] OnOff ZigbeeMessageRx received')
   local endpoint = zb_rx.address_header.src_endpoint.value
   local onoff = command.value and caps.switch.switch.on() or caps.switch.switch.off()
 
@@ -38,7 +35,6 @@ end
 -- configured reporting for ElectricalMeasurement.ActivePower
 -- ]]
 function controller.handle_power_remote(_, device, command, zb_rx)
-  log.info('>> [EXTERNAL_REPORT] ElectricalMeasurement ZigbeeMessageRx received')
   local endpoint = zb_rx.address_header.src_endpoint.value
 
   return device:emit_event_for_endpoint(
