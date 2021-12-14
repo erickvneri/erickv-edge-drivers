@@ -9,6 +9,7 @@ local do_configure = require 'lifecycles'.do_configure
 local device_init = require 'lifecycles'.device_init
 local controller = require 'controller'
 
+
 --------------------------- Driver Setup ---------------------------
 local driver_config = {
   supported_capabilities = {
@@ -38,13 +39,14 @@ local driver_config = {
     },
     [caps.refresh.ID] = {
       [caps.refresh.commands.refresh.NAME] = function(_, device)
+        -- TODO: EXTEND FUNCTIONALITY OF REFRESH HANDLER
         device:refresh()
       end
     }
   }
 }
 
-local driver = ZigbeeDriver("switch_power_outlet", driver_config)
 
--------------------------- Driver Execute --------------------------
+--------------------------- Driver Init ---------------------------
+local driver = ZigbeeDriver("switch_power_outlet", driver_config)
 driver:run()

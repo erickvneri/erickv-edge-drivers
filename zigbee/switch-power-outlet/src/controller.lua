@@ -2,6 +2,7 @@ local caps = require 'st.capabilities'
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
 
+
 local controller = {}
 
 -- [[
@@ -18,6 +19,7 @@ function controller.onoff_handler(_, device, command)
   return device:send(onoff(device):to_endpoint(ep))
 end
 
+
 -- [[
 -- Handles ZigbeeMessageRx based on
 -- configured reporting for OnOff.OnOff
@@ -29,6 +31,7 @@ function controller.handle_onoff_remote(_, device, command, zb_rx)
   -- Platform event
   return device:emit_event_for_endpoint(endpoint, onoff)
 end
+
 
 -- [[
 -- Handles ZigbeeMessageRx based on
