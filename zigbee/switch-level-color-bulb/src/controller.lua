@@ -1,7 +1,12 @@
 local caps = require 'st.capabilities'
+local dtypes = require 'st.zigbee.data_types'
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
+
+-- Level abstractions
 local Level = clusters.Level
+local MoveToLevel = Level.server.commands.MoveToLevel
+
 local log = require 'log'
 
 
@@ -24,19 +29,24 @@ function controller.onoff_handler(_, device, command)
 end
 
 
-
 -- [[
 -- Handles Switch command triggered from
 -- the SmartThings Platform (app, scene, rule,
 -- SmartApp, etc)
 -- ]]
 function controller.level_handler(_, device, command)
-  log.debug('>> [APP_REPORT] OnOff ZigbeeMessageTx sent')
   local ep = device:get_endpoint_for_component_id(command.component)
-  for k,v in pairs(command) do print(k,v) end
+  local lvl = math.floor(((command.args.level * 0xFF) / 0x64) + 0.5)
 
-  device:send(
-    Level.server.commands.MoveToLevel({level=20}):to_endpoint(ep))
+  --[[
+  -- MoveToLevel(
+  --   device,
+  --   level (default 0x00),
+  --   transition_time,
+  --   options_mask,
+  --   options_override)
+  --]]
+  return device:send(MoveToLevel(device, lvl):to_endpoint(ep))
 end
 
 
@@ -51,6 +61,18 @@ function controller.handle_onoff_remote(_, device, command, zb_rx)
 
   -- Platform event
   return device:emit_event_for_endpoint(endpoint, onoff)
+end
+
+
+-- [[
+-- Handles ZigbeeMessageRx based on
+-- configured reporting for Level.CurrentLevel
+-- ]]
+function controller.handle_current_level_remote(_, device, command, zb_rx)
+  local ep = zb_rx.address_header.src_endpoint.value
+  local lvl = math.floor(((command.value / 0xFF) * 0x64 ) + 0.5)
+
+  return device:emit_event_for_endpoint(ep, caps.switchLevel.level(lvl))
 end
 
 
