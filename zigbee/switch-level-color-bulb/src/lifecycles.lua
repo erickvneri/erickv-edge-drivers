@@ -4,6 +4,7 @@ local device_mgmt = require 'st.zigbee.device_management'
 
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
+local Level = clusters.Level
 
 
 ---------------------------------------
@@ -39,18 +40,25 @@ local function do_configure(driver, device)
     --   - Report Configuration
     --   - Fetch current state
     -- ]]
+    -- bind_request
     device:send(device_mgmt.build_bind_request(
       device,
       cluster.ID,
       driver.environment_info.hub_zigbee_eui))
-
+    -- configure_reporting
     device:send(attribute:configure_reporting(device,0,300,1))
-
+    -- read
     device:send(attribute:read(device))
   end
 
+  -- Configure Switch Capability (OnOff cluster)
   assert(device:supports_capability_by_id(caps.switch.ID), 'switch not supported')
   configure_reporting_by_cluster(device, driver, OnOff, OnOff.attributes.OnOff)
+
+  -- Configure SwitchLevel Capability (Level cluster)
+  assert(device:supports_capability_by_id(caps.switchLevel.ID), '<SwitchLevel> not supported')
+  configure_reporting_by_cluster(device, driver, Level, Level.attributes.CurrentLevel)
+
 
   -- configure
   device:configure()
