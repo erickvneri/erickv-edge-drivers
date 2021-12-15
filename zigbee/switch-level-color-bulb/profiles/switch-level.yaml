@@ -14,3 +14,13 @@ metadata:
   deviceType: Light
   ocfDeviceType: oic.d.light
   deviceTypeId: Light
+preferences:
+  - title: "Transition time (in seconds)"
+    name: transitionTime
+    description: "Time-lapse to change from the current level state to a new level (WARN: long transitions may result in app error even if device is configured properly)"
+    required: false
+    preferenceType: integer
+    definition:
+      default: 0
+      minimum: 0
+      maximum: 500
