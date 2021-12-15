@@ -21,6 +21,8 @@ preferences:
     required: false
     preferenceType: integer
     definition:
+      # default defined by Level.MoveToLevel cluster command
       default: 0
       minimum: 0
-      maximum: 500
+      # maximum 16-bit integer (0xFFFF)
+      maximum: 65535
