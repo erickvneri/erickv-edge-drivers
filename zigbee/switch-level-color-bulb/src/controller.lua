@@ -33,7 +33,7 @@ function controller.level_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
   local move_to_level = Level.server.commands.MoveToLevel
   local lvl = math.floor(((command.args.level * 0xFF) / 0x64) + 0.5)
-  local transition_time = device.preferences.transitionTime
+  local transition_time = device.preferences.transitionTime * 10
 
   --[[
   -- MoveToLevel(
@@ -43,7 +43,8 @@ function controller.level_handler(_, device, command)
   --   options_mask,
   --   options_override)
   --]]
-  return device:send(move_to_level(device, lvl, transition_time):to_endpoint(ep))
+  device:send(move_to_level(device, lvl, transition_time):to_endpoint(ep))
+  device:emit_event_for_endpoint(ep, caps.switchLevel.level(command.args.level))
 end
 
 
