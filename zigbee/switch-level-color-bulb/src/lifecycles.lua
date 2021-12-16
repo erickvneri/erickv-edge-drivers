@@ -51,14 +51,18 @@ local function do_configure(driver, device)
     device:send(attribute:read(device))
   end
 
-  -- Configure Switch Capability (OnOff cluster)
+  -- Configure Switch
+  -- Capability (OnOff cluster)
   assert(device:supports_capability_by_id(caps.switch.ID), 'switch not supported')
   configure_reporting_by_cluster(device, driver, OnOff, OnOff.attributes.OnOff)
 
-  -- Configure SwitchLevel Capability (Level cluster)
+  -- Configure SwitchLevel
+  -- Capability (Level cluster)
+  -- Only read attribute to avoid DDoSing
+  -- the Hub and platform on custom transition
+  -- times (device.preferences.transitionTime)
   assert(device:supports_capability_by_id(caps.switchLevel.ID), '<SwitchLevel> not supported')
-  configure_reporting_by_cluster(device, driver, Level, Level.attributes.CurrentLevel)
-
+  device:send(Level.attributes.CurrentLevel:read(device))
 
   -- configure
   device:configure()
