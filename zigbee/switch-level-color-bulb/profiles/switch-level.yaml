@@ -15,6 +15,8 @@ metadata:
   ocfDeviceType: oic.d.light
   deviceTypeId: Light
 preferences:
+  # user-defined option to allow transition
+  # of switch level states based on time (seconds)
   - title: "Transition time (in seconds)"
     name: transitionTime
     description: "Time-lapse to change from the current level state to a new level"
@@ -26,3 +28,13 @@ preferences:
       minimum: 0
       # maximum 16-bit integer (0xFFFF)
       maximum: 65535
+
+  # user-defined option to allow fade
+  # light on switch actions (on/off)
+  - title: "Fade on Switch"
+    name: fadeOnSwitch
+    description: "Implement defined transition time with when turning device On/Off"
+    required: false
+    preferenceType: boolean
+    definition:
+      default: false
