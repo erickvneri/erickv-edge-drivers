@@ -36,14 +36,43 @@ local controller = {}
 -- [[
 -- Handles Switch command triggered from
 -- the SmartThings Platform (app, scene, rule,
--- SmartApp, etc)
+-- SmartApp, etc).
+--
+-- If user-defined preference "fadeOnSwitch"
+-- is active, handler will call _send_move_to_level
+-- to handle Switch through transitions.
 -- ]]
 function controller.onoff_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
-  local attr = OnOff.server.commands
-  local onoff = command.command == 'on' and attr.On or attr.Off
+  local onoff_ref = command.command
 
-  return device:send(onoff(device):to_endpoint(ep))
+  if device.preferences.fadeOnSwitch then
+    return controller.fade_onoff(device, ep, onoff_ref)
+  end
+
+  local attr = OnOff.server.commands
+  local onoff = onoff_ref == 'on' and attr.On or attr.Off
+
+  assert(pcall(
+    device.send, device, onoff(device):to_endpoint(ep)
+  ))
+end
+
+
+-- [[
+-- Handles Siwtch command when
+-- device.preferences.fadeOnSwitch
+-- is set to TRUE.
+-- ]]
+function controller.fade_onoff(device, ep, onoff_ref)
+  local attr = onoff_ref == 'off' and caps.switch.switch.off() or caps.switch.switch.on()
+  local lvl = onoff_ref == 'off' and 0x00 or device.state_cache.main.switchLevel.level.value
+  local transition_time = device.preferences.transitionTime * 10
+
+  assert(_send_move_to_level(device, ep, lvl, transition_time))
+  assert(pcall(
+    device.emit_event_for_endpoint, device, ep, attr
+  ))
 end
 
 
