@@ -7,6 +7,32 @@ local Level = clusters.Level
 local log = require 'log'
 
 
+-- [[
+-- Lower-level implementation of cluster
+-- command Level.MoveToLevelWithOnOff
+-- ]]
+local function _send_move_to_level(device, endpoint, level, transition, ...)
+  --[[
+  -- MoveToLevelWithOnOff
+  --   device:            ZigbeeDevice
+  --   level:             Uint8         0x00
+  --   transition_time:   Uint16        0x00
+  --   options_mask:      LevelOptions  0x00
+  --   options_override:  LevelOptions  0x00
+  --]]
+  return pcall(
+    device.send,
+    device,
+    Level.server.commands.MoveToLevelWithOnOff(device, level, transition):to_endpoint(endpoint)
+  )
+end
+
+
+-- [[
+-- Implementation modules abstracted
+-- in abstract class controller which
+-- only encapsulates the public methods
+-- ]]
 local controller = {}
 
 
@@ -35,16 +61,10 @@ function controller.level_handler(_, device, command)
   local lvl = math.floor(((command.args.level * 0xFF) / 0x64) + 0.5)
   local transition_time = device.preferences.transitionTime * 10
 
-  --[[
-  -- MoveToLevel(
-  --   device,
-  --   level (default 0x00),
-  --   transition_time,
-  --   options_mask,
-  --   options_override)
-  --]]
-  device:send(move_to_level(device, lvl, transition_time):to_endpoint(ep))
-  device:emit_event_for_endpoint(ep, caps.switchLevel.level(command.args.level))
+  assert(_send_move_to_level(device, ep, lvl, transition_time))
+  assert(pcall(
+    device.emit_event_for_endpoint, device, ep, caps.switchLevel.level(command.args.level)
+  ))
 end
 
 
