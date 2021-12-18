@@ -31,9 +31,8 @@ preferences:
 
   # user-defined option to allow fade
   # light on switch actions (on/off)
-  - title: "Fade on Switch"
+  - title: "Fade on switch"
     name: fadeOnSwitch
-    description: "Implement defined transition time with when turning device On/Off"
     required: false
     preferenceType: boolean
     definition:
