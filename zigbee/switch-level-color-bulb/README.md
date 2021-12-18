@@ -1,19 +1,27 @@
 # Edge Driver for Zigbee-based Bulbs
 
-### Devices supported
+This is a _Zigbee-based Edge Driver_ that extends a little bit the default functionality of the _Sengled E11-G13_ Bulb.
+
+Since this is the only _Zigbee Bulb_ I own, I can't guarantee whether it supports additional fingerprints or not, but it's worth trying, so submit your _Pull Requests_ anytime or ping me right away.
+\- erickv
+
+### Current supported devices
 
 1. Sengled Bulb _(E11-G13)_
 
-### Regarding Clusters and Capabilities
+### Features
 
-- Switch
+The features provided with this _Zigbee Edge Driver_ can be configured through the device's settings, and these are the following:
 
-  Some interesting information regarding extended functionalities based on the
-  OnOff cluster
+- **Transition Time** _(in seconds)_, which defines the time-lapse to change from the current level state to a new level.
+- **Fade on switch**, which implements the defined transition time while device is turned On or Off.
 
-- Switch Level
+### Installation
 
-  The most interesting feature that can be programmed via user-defined preferences
-  is the `transition_time` parameter that the `Level.MoveToLevel` cluster command
-  accepts. And it defines the time-lapse that it will take the device to change from
-  the **current level state** to the **latest level state** _(this can be overriden on-demand)_.
+- End-user steps
+
+  Channel Invitation to: **[@erickv Shared Drivers](#)**
+
+- Development steps
+
+  [ TUTORIALS ]
