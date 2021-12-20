@@ -63,13 +63,17 @@ end
 -- is set to TRUE.
 -- ]]
 function controller.fade_onoff(device, ep, onoff_ref)
-  local attr = onoff_ref == 'off' and caps.switch.switch.off() or caps.switch.switch.on()
-  local lvl = onoff_ref == 'off' and 0x00 or device.state_cache.main.switchLevel.level.value
   local transition_time = device.preferences.transitionTime * 10
+  local onoff = caps.switch.switch.on()
+  local lvl = device.state_cache.main.switchLevel.level.value
+  if onoff_ref == 'off' then
+    onoff = caps.switch.switch.off()
+    lvl = 0x00
+  end
 
   assert(_send_move_to_level(device, ep, lvl, transition_time))
   assert(pcall(
-    device.emit_event_for_endpoint, device, ep, attr
+    device.emit_event_for_endpoint, device, ep, onoff
   ))
 end
 
