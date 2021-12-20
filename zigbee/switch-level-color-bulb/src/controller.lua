@@ -54,11 +54,6 @@ function controller.onoff_handler(_, device, command)
   assert(pcall(
     device.send, device, OnOff.server.commands.Toggle(device):to_endpoint(ep)
   ))
-
-  -- TODO: verify which approach is faster
-  --return device.preferences.fadeOnSwitch and
-    --controller.fade_onoff(device, ep, command.command) or
-    --assert(pcall(device.send, device, OnOff.server.commands.Toggle(device):to_endpoint(ep)))
 end
 
 
