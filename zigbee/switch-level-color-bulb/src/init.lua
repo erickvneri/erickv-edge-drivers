@@ -41,6 +41,7 @@ local driver_config = {
     [caps.refresh.ID] = {
       [caps.refresh.commands.refresh.NAME] = function(_, device)
         device:refresh()
+        device:send(Level.attributes.CurrentLevel:read(device))
       end
     }
   }
