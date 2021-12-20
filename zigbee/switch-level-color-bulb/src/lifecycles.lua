@@ -26,8 +26,6 @@ end
 --   - doConfigure
 -- ]]
 local function do_configure(driver, device)
-  log.info('>> [DO_CONFIGURE]')
-
   -- In order to wake device
   device:refresh()
 
@@ -53,7 +51,7 @@ local function do_configure(driver, device)
 
   -- Configure Switch
   -- Capability (OnOff cluster)
-  assert(device:supports_capability_by_id(caps.switch.ID), 'switch not supported')
+  assert(device:supports_capability_by_id(caps.switch.ID), '<Switch> not supported')
   configure_reporting_by_cluster(device, driver, OnOff, OnOff.attributes.OnOff)
 
   -- Configure SwitchLevel
@@ -69,7 +67,6 @@ local function do_configure(driver, device)
 end
 
 local function device_init(driver, device)
-  log.info('>> [DEVICE_INIT]')
   device:set_component_to_endpoint_fn(component_to_endpoint)
   device:set_endpoint_to_component_fn(endpoint_to_component)
 
