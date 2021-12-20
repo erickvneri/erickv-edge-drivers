@@ -26,6 +26,27 @@ local function _send_move_to_level(device, endpoint, level, transition, ...)
 end
 
 
+-- [[
+-- Handles Switch command when
+-- device.preferences.transitionOnSwitch
+-- is set to TRUE.
+-- ]]
+local function _onoff_with_transition(device, ep, onoff_ref)
+  local transition_time = device.preferences.transitionTime * 10
+  local onoff = caps.switch.switch.on()
+  local lvl = device.state_cache.main.switchLevel.level.value
+  if onoff_ref == 'off' then
+    onoff = caps.switch.switch.off()
+    lvl = 0x00
+  end
+
+  assert(_send_move_to_level(device, ep, lvl, transition_time))
+  assert(pcall(
+    device.emit_event_for_endpoint, device, ep, onoff
+  ))
+end
+
+
 ------------------- Publics -------------------
 -- [[
 -- Implementation modules abstracted
@@ -40,40 +61,19 @@ local controller = {}
 -- the SmartThings Platform (app, scene, rule,
 -- SmartApp, etc).
 --
--- If user-defined preference "fadeOnSwitch"
+-- If user-defined preference "transitionOnSwitch"
 -- is active, handler will call _send_move_to_level
 -- to handle Switch through transitions.
 -- ]]
 function controller.onoff_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
 
-  if device.preferences.fadeOnSwitch then
-    return controller.fade_onoff(device, ep, command.command)
+  if device.preferences.transitionOnSwitch then
+    return _onoff_with_transition(device, ep, command.command)
   end
 
   assert(pcall(
     device.send, device, OnOff.server.commands.Toggle(device):to_endpoint(ep)
-  ))
-end
-
-
--- [[
--- Handles Siwtch command when
--- device.preferences.fadeOnSwitch
--- is set to TRUE.
--- ]]
-function controller.fade_onoff(device, ep, onoff_ref)
-  local transition_time = device.preferences.transitionTime * 10
-  local onoff = caps.switch.switch.on()
-  local lvl = device.state_cache.main.switchLevel.level.value
-  if onoff_ref == 'off' then
-    onoff = caps.switch.switch.off()
-    lvl = 0x00
-  end
-
-  assert(_send_move_to_level(device, ep, lvl, transition_time))
-  assert(pcall(
-    device.emit_event_for_endpoint, device, ep, onoff
   ))
 end
 
