@@ -18,10 +18,10 @@ The features provided with this _Zigbee Edge Driver_ can be configured through t
 
 ### Installation
 
-- End-user steps
+- Quick setup:
 
-  Channel Invitation to: **[@erickv Shared Drivers](#)**
+  Channel Invitation to: **[@erickv Shared Drivers](https://api.smartthings.com/invite/Q1jP18n4oZML)**
 
-- Development steps
+- DIY path:
 
-  [ TUTORIALS ]
+  [ TUTORIALS AND FURTHER INSTRUCTIONS ]
