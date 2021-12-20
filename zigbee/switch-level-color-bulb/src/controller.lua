@@ -3,7 +3,8 @@ local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
 local Level = clusters.Level
 
-
+------------------- Privates -------------------
+--
 -- [[
 -- Lower-level implementation of cluster
 -- command Level.MoveToLevelWithOnOff
@@ -25,6 +26,7 @@ local function _send_move_to_level(device, endpoint, level, transition, ...)
 end
 
 
+------------------- Publics -------------------
 -- [[
 -- Implementation modules abstracted
 -- in abstract class controller which
