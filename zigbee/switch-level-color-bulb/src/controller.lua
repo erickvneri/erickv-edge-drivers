@@ -46,18 +46,19 @@ local controller = {}
 -- ]]
 function controller.onoff_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
-  local onoff_ref = command.command
 
   if device.preferences.fadeOnSwitch then
-    return controller.fade_onoff(device, ep, onoff_ref)
+    return controller.fade_onoff(device, ep, command.command)
   end
 
-  local attr = OnOff.server.commands
-  local onoff = onoff_ref == 'on' and attr.On or attr.Off
-
   assert(pcall(
-    device.send, device, onoff(device):to_endpoint(ep)
+    device.send, device, OnOff.server.commands.Toggle(device):to_endpoint(ep)
   ))
+
+  -- TODO: verify which approach is faster
+  --return device.preferences.fadeOnSwitch and
+    --controller.fade_onoff(device, ep, command.command) or
+    --assert(pcall(device.send, device, OnOff.server.commands.Toggle(device):to_endpoint(ep)))
 end
 
 
