@@ -31,8 +31,8 @@ preferences:
 
   # user-defined option to allow fade
   # light on switch actions (on/off)
-  - title: "Fade on switch"
-    name: fadeOnSwitch
+  - title: "Transition on switch"
+    name: transitionOnSwitch
     required: false
     preferenceType: boolean
     definition:
