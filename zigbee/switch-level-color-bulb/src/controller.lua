@@ -18,10 +18,12 @@ local function _send_move_to_level(device, endpoint, level, transition, ...)
   --   options_mask:      LevelOptions  0x00
   --   options_override:  LevelOptions  0x00
   --]]
+  local lvl = math.floor(((level * 0xFF) / 0x64) + 0,5)
+
   return pcall(
     device.send,
     device,
-    Level.server.commands.MoveToLevelWithOnOff(device, level, transition):to_endpoint(endpoint)
+    Level.server.commands.MoveToLevelWithOnOff(device, lvl, transition):to_endpoint(endpoint)
   )
 end
 
@@ -85,7 +87,7 @@ end
 -- ]]
 function controller.level_handler(_, device, command)
   local ep = device:get_endpoint_for_component_id(command.component)
-  local lvl = math.floor(((command.args.level * 0xFF) / 0x64) + 0.5)
+  local lvl = command.args.level
   local transition_time = device.preferences.transitionTime * 10
 
   assert(_send_move_to_level(device, ep, lvl, transition_time))
