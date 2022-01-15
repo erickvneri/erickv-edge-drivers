@@ -12,7 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 local OnOff = require "st.zigbee.zcl.clusters".OnOff
-local BuildClusterAttribute = require "st.zigbee.cluster_base".build_cluster_attribute
+local build_cluster_attribute = require "st.zigbee.cluster_base".build_cluster_attribute
 local Enum8 = require "st.zigbee.data_types".Enum8
 local OnOffButtonAttr = 0x8004
 local OnOffButtonAttrLabel = "OnOffButton"
@@ -22,7 +22,7 @@ local OnOffButtonAttrLabel = "OnOffButton"
 -- which is used by device to emit
 -- button-specific events.
 return assert(
-  BuildClusterAttribute(
+  build_cluster_attribute(
   OnOff,                -- cluster
   OnOffButtonAttr,      -- attr_id
   OnOffButtonAttrLabel, -- attr_name
