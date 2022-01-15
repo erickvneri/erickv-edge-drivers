@@ -11,12 +11,47 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
-local BuildBindRequest = require "st.zigbee.device_management".build_bind_request
-local Battery = require "st.capabilities".battery
-local Button = require "st.capabilities".button
+local build_bind_request = require "st.zigbee.device_management".build_bind_request
+local battery = require "st.capabilities".battery
+local button = require "st.capabilities".button
+
+-- button event map
+local button_event_map = {
+  [0x00] = "pushed",
+  [0x01] = "double",
+  [0x02] = "held"
+}
+
+local pretty_print = require "st.utils".stringify_table
+local function pprint (s)
+  print(pretty_print(s))
+end
 
 
-local function send_button_event(_, device, command, zbrx)end
+local function _send_device_event(ep, device, event)
+  return pcall(
+    device.emit_event_for_endpoint,
+    device,
+    ep,
+    event)
+end
+
+-- handles incoming ZigbeeMessageRx
+-- for button-specific events and
+-- sends device event accordingly
+--
+-- @param device ZigbeeDevice
+-- @param zbrx   ZigbeeMessageRx
+local function send_button_event(_, device, zbrx)
+  local ep = zbrx.address_header.src_endpoint.value
+  local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
+  print(type(event), event)
+
+  return assert(_send_device_event(
+    ep,
+    device,
+    button.button({value = button_event_map[tonumber(event)]})))
+end
 
 
 -- generates device battery level event
@@ -26,10 +61,11 @@ local function send_button_event(_, device, command, zbrx)end
 -- @param command table
 local function send_battery_level_event(_, device, command)
   local level = math.floor(command.value / 2)
-  return pcall(
-    device.emit_event,
+
+  return assert(_send_device_event(
+    1,
     device,
-    Battery.battery(level))
+    battery.battery(level)))
 end
 
 
@@ -45,7 +81,7 @@ local function send_cluster_bind_request(device, hub_zigbee_eui, cluster_id)
   return pcall(
     device.send,
     device,
-    BuildBindRequest(device, cluster_id, hub_zigbee_eui))
+    build_bind_request(device, cluster_id, hub_zigbee_eui))
 end
 
 
