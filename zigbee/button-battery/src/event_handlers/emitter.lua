@@ -27,14 +27,15 @@ local button_event_map = {
 -- and propagates SmartThings API
 -- accordingly.
 --
--- @param ep     number
--- @param device ZigbeeDevice
--- @param event  st.capability.attribute_event
-local function _send_device_event(ep, device, event)
+-- @param ep           number
+-- @param device       ZigbeeDevice
+-- @param event        st.capability.attribute_event
+local function _send_device_event(endpoint, device, event)
+
   return pcall(
     device.emit_event_for_endpoint,
     device,
-    ep,
+    endpoint,
     event)
 end
 
@@ -46,11 +47,11 @@ end
 -- @param device ZigbeeDevice
 -- @param zbrx   ZigbeeMessageRx
 local function send_button_event(_, device, zbrx)
-  local ep = zbrx.address_header.src_endpoint.value
+  local endpoint = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
 
   return assert(_send_device_event(
-    ep,
+    endpoint,
     device,
     button.button({value = button_event_map[tonumber(event)]})))
 end
