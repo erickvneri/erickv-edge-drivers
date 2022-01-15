@@ -48,7 +48,6 @@ end
 local function send_button_event(_, device, zbrx)
   local ep = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
-  print(type(event), event)
 
   return assert(_send_device_event(
     ep,
