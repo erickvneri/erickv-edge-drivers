@@ -11,8 +11,8 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
-local Battery = require "st.capabilities".battery
-local Button = require "st.capabilities".button
+local battery = require "st.capabilities".battery
+local button = require "st.capabilities".button
 
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
 local OnOff = require "st.zigbee.zcl.clusters".OnOff
@@ -66,13 +66,13 @@ local function added(_, device)
 
   -- define number of buttons by
   -- components supported by profile
-  device:emit_event(Button.numberOfButtons({ value=number_of_buttons }))
+  device:emit_event(button.numberOfButtons({ value=number_of_buttons }))
 
   -- for each component, configure
   -- supported button events
   for ep=1, number_of_buttons do
     device:emit_event_for_endpoint(
-      ep, Button.supportedButtonValues({ "pushed", "double", "held" }))
+      ep, button.supportedButtonValues({ "pushed", "double", "held" }))
   end
 end
 
@@ -89,9 +89,9 @@ local function do_configure(driver, device)
   local err = "failed to configure reporting: "
   local hub_zigbee_eui = driver.environment_info.hub_zigbee_eui
   -- [[
-  -- Battery capability setup
+  -- battery capability setup
   -- ]]
-  assert(device:supports_capability_by_id(Battery.ID), "<Battery> capability not supported")
+  assert(device:supports_capability_by_id(battery.ID), "<Battery> capability not supported")
   assert(send_cluster_bind_request(
     device, hub_zigbee_eui, PowerConfiguration.ID))
   assert(send_attr_configure_reporting(
@@ -102,9 +102,9 @@ local function do_configure(driver, device)
     err.."PowerConfiguration.BatteryVoltage")
 
   --[[
-  -- Button capability setup
+  -- button capability setup
   --]]
-  assert(device:supports_capability_by_id(Button.ID), "<Button> capability not supported")
+  assert(device:supports_capability_by_id(button.ID), "<button> capability not supported")
   assert(send_cluster_bind_request(device, hub_zigbee_eui, OnOff.ID))
   -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
   -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
