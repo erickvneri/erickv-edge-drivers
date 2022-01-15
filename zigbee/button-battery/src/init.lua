@@ -11,8 +11,8 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
-local Battery = require "st.capabilities".battery
-local Button = require "st.capabilities".button
+local battery = require "st.capabilities".battery
+local button = require "st.capabilities".button
 
 local ZigbeeDriver = require "st.zigbee"
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
@@ -30,8 +30,8 @@ local emitter = require "event_handlers".emitter
 -- Edge Driver Configuration
 local driver_config = {
   supported_capabilities = {
-    Battery,
-    Button
+    battery,
+    button
   },
   lifecycle_handlers = {
     init = init,
@@ -46,7 +46,7 @@ local driver_config = {
     },
     cluster = {
       [OnOff.ID] = {
-        [0xFD] = emitter.send_button_event
+        [OnOffButtonCommandId] = emitter.send_button_event
       }
     }
   }
