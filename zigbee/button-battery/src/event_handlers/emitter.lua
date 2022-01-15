@@ -22,12 +22,14 @@ local button_event_map = {
   [0x02] = "held"
 }
 
-local pretty_print = require "st.utils".stringify_table
-local function pprint (s)
-  print(pretty_print(s))
-end
 
-
+-- send device capability event
+-- and propagates SmartThings API
+-- accordingly.
+--
+-- @param ep     number
+-- @param device ZigbeeDevice
+-- @param event  st.capability.attribute_event
 local function _send_device_event(ep, device, event)
   return pcall(
     device.emit_event_for_endpoint,
@@ -35,6 +37,7 @@ local function _send_device_event(ep, device, event)
     ep,
     event)
 end
+
 
 -- handles incoming ZigbeeMessageRx
 -- for button-specific events and
@@ -57,8 +60,8 @@ end
 -- generates device battery level event
 -- to default (main) profile component
 --
--- @param device ZigbeeDevice
--- @param command table
+-- @param device  ZigbeeDevice
+-- @param command ZigbeeMessageRx
 local function send_battery_level_event(_, device, command)
   local level = math.floor(command.value / 2)
 
@@ -74,9 +77,9 @@ end
 -- this is supposed to happen as soon
 -- as device is created or driver inits.
 --
--- @param device table
+-- @param device         ZigbeeDevice
 -- @param hub_zigbee_eui string
--- @param cluster_id string
+-- @param cluster_id     Uint8
 local function send_cluster_bind_request(device, hub_zigbee_eui, cluster_id)
   return pcall(
     device.send,
@@ -91,8 +94,8 @@ end
 -- this is supposed to happen as soon
 -- as device is created or driver inits.
 --
--- @param device <table>
--- @param attr <table>
+-- @param device table
+-- @param attr   table
 local function send_attr_configure_reporting(device, attr)
   return pcall(
     device.send,
