@@ -24,7 +24,7 @@ local init = require "lifecycles".init
 local added = require "lifecycles".added
 local do_configure = require "lifecycles".do_configure
 
-local emitter = require "event_handlers".emitter
+local emitter = require "emitter".emitter
 
 
 -- Edge Driver Configuration

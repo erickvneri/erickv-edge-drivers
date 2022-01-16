@@ -19,8 +19,9 @@ local OnOff = require "st.zigbee.zcl.clusters".OnOff
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaCluster = require "custom".ReadTuyaCluster
 
-local send_cluster_bind_request = require "event_handlers.emitter".send_cluster_bind_request
-local send_attr_configure_reporting = require "event_handlers.emitter".send_attr_configure_reporting
+local send_cluster_bind_request = require "emitter.emitter".send_cluster_bind_request
+local send_attr_configure_reporting = require "emitter.emitter".send_attr_configure_reporting
+local send_button_capability_setup = require "emitter.emitter".send_button_capability_setup
 
 
 -- generates endpoint reference based
@@ -62,18 +63,10 @@ end
 --
 -- @param device ZigbeeDevice
 local function added(_, device)
-  local number_of_buttons = device:component_count()
-
-  -- define number of buttons by
-  -- components supported by profile
-  device:emit_event(button.numberOfButtons({ value=number_of_buttons }))
-
-  -- for each component, configure
-  -- supported button events
-  for ep=1, number_of_buttons do
-    device:emit_event_for_endpoint(
-      ep, button.supportedButtonValues({ "pushed", "double", "held" }))
-  end
+  return send_button_capability_setup(
+    device,
+    device:component_count(),
+    { "pushed", "double", "held" })
 end
 
 
@@ -91,15 +84,15 @@ local function do_configure(driver, device)
   -- [[
   -- battery capability setup
   -- ]]
-  assert(device:supports_capability_by_id(battery.ID), "<Battery> capability not supported")
+  assert(device:supports_capability_by_id(battery.ID), "<battery> capability not supported")
   assert(send_cluster_bind_request(
     device, hub_zigbee_eui, PowerConfiguration.ID))
   assert(send_attr_configure_reporting(
     device, PowerConfiguration.attributes.BatteryPercentageRemaining),
     err.."PowerConfiguration.BatteryPercentageRemaining")
-  assert(send_attr_configure_reporting(
-    device, PowerConfiguration.attributes.BatteryVoltage),
-    err.."PowerConfiguration.BatteryVoltage")
+  -- assert(send_attr_configure_reporting(                       TODO: DEFINE HOW MUCH IMPORTANT IT
+  --   device, PowerConfiguration.attributes.BatteryVoltage),    IT TO SUBSCRIBE TO BatteryVoltage
+  --   err.."PowerConfiguration.BatteryVoltage")
 
   --[[
   -- button capability setup
