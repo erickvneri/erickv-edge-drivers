@@ -12,5 +12,5 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 return {
-  emitter = require "event_handlers.emitter"
+  emitter = require "emitter.emitter"
 }

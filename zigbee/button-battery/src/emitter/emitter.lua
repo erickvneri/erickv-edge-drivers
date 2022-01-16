@@ -27,10 +27,12 @@ local button_event_map = {
 -- and propagates SmartThings API
 -- accordingly.
 --
--- @param ep           number
+-- @param endpoint           number
 -- @param device       ZigbeeDevice
 -- @param event        st.capability.attribute_event
-local function _send_device_event(endpoint, device, event)
+-- @param state_change boolean
+local function _send_device_event(endpoint, device, event, state_change)
+  event.state_change = state_change
 
   return pcall(
     device.emit_event_for_endpoint,
@@ -49,11 +51,38 @@ end
 local function send_button_event(_, device, zbrx)
   local endpoint = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
+  local mapped_evt = button_event_map[tonumber(event)]
 
   return assert(_send_device_event(
     endpoint,
     device,
-    button.button({value = button_event_map[tonumber(event)]})))
+    button.button(mapped_evt),
+    true)) -- state_change
+end
+
+
+-- send button capability setup
+-- to device. Values should be
+-- consistent with profile specified
+-- by model.
+--
+-- @param device         ZigbeeDevice
+-- @param buttons_number number
+-- @param button_events  table
+local function send_button_capability_setup(device, buttons_number, button_events)
+    assert(_send_device_event(
+      1,  -- "main" profile component
+      device,
+      button.numberOfButtons(buttons_number)))
+
+    -- configure supported values for
+    -- each profile component
+    for ep=1, buttons_number do
+      assert(_send_device_event(
+        ep,
+        device,
+        button.supportedButtonValues(button_events)))
+    end
 end
 
 
@@ -108,6 +137,7 @@ return {
   -- SmartThings-specific events
   send_battery_level_event=send_battery_level_event,
   send_button_event=send_button_event,
+  send_button_capability_setup=send_button_capability_setup,
 
   -- Zigbee-specific events
   send_cluster_bind_request=send_cluster_bind_request,
