@@ -14,6 +14,10 @@
 local build_bind_request = require "st.zigbee.device_management".build_bind_request
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
+local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
+local OnOffButton = require "custom".OnOffButton
+local ReadTuyaCluster = require "custom".ReadTuyaCluster
+-- local OnOff = require "st.zigbee.zcl.clusters".OnOff
 
 -- button event map
 local button_event_map = {
@@ -40,6 +44,7 @@ local function _send_device_event(endpoint, device, event, state_change)
     endpoint,
     event)
 end
+
 
 
 -- handles incoming ZigbeeMessageRx
@@ -101,6 +106,19 @@ local function send_battery_level_event(_, device, command)
 end
 
 
+-- send ZigbeeMessageRx to device
+-- managed by this driver.
+--
+-- @param device  ZigbeeDevice
+-- @param message ZigbeeMessageRx
+local function send_zigbee_message(device, message)
+  return pcall(
+    device.send,
+    device,
+    message)
+end
+
+
 -- build cluster bind request
 --
 -- this is supposed to happen as soon
@@ -135,11 +153,12 @@ end
 
 return {
   -- SmartThings-specific events
-  send_battery_level_event=send_battery_level_event,
   send_button_event=send_button_event,
   send_button_capability_setup=send_button_capability_setup,
+  send_battery_level_event=send_battery_level_event,
 
   -- Zigbee-specific events
+  send_zigbee_message=send_zigbee_message,
   send_cluster_bind_request=send_cluster_bind_request,
   send_attr_configure_reporting=send_attr_configure_reporting,
 }
