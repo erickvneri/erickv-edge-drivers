@@ -15,13 +15,14 @@ local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
 
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
-local OnOff = require "st.zigbee.zcl.clusters".OnOff
+-- local OnOff = require "st.zigbee.zcl.clusters".OnOff
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaCluster = require "custom".ReadTuyaCluster
 
 local send_cluster_bind_request = require "emitter".send_cluster_bind_request
 local send_attr_configure_reporting = require "emitter".send_attr_configure_reporting
 local send_button_capability_setup = require "emitter".send_button_capability_setup
+local send_zigbee_message = require "emitter".send_zigbee_message
 
 
 -- generates endpoint reference based
@@ -79,40 +80,47 @@ end
 -- @param driver ZigbeeDriver
 -- @param device ZigbeeDevice
 local function do_configure(driver, device)
-  local err = "failed to configure reporting: "
+  local err = "failed to configure device: "
   local hub_zigbee_eui = driver.environment_info.hub_zigbee_eui
+
   -- [[
   -- battery capability setup
+  -- if device supports it
   -- ]]
   assert(device:supports_capability_by_id(battery.ID), "<battery> capability not supported")
+
+  -- bind request
   assert(send_cluster_bind_request(
-    device, hub_zigbee_eui, PowerConfiguration.ID))
+    device, hub_zigbee_eui, PowerConfiguration.ID),
+    err.."BindRequest - PowerConfiguration.BatteryPercentageRemaining")
+
+  -- configure reporting
   assert(send_attr_configure_reporting(
     device, PowerConfiguration.attributes.BatteryPercentageRemaining),
     err.."PowerConfiguration.BatteryPercentageRemaining")
-  -- assert(send_attr_configure_reporting(                       TODO: DEFINE HOW MUCH IMPORTANT IT
-  --   device, PowerConfiguration.attributes.BatteryVoltage),    IT TO SUBSCRIBE TO BatteryVoltage
+
+  -- TODO: DEFINE THE IMPORTANCE TO
+  -- SUBSCRIBE TO BATTERY VOLTAGE
+  -- assert(send_attr_configure_reporting(
+  --   device, PowerConfiguration.attributes.BatteryVoltage),
   --   err.."PowerConfiguration.BatteryVoltage")
+
 
   --[[
   -- button capability setup
+  -- if device supports it
   --]]
   assert(device:supports_capability_by_id(button.ID), "<button> capability not supported")
-  assert(send_cluster_bind_request(device, hub_zigbee_eui, OnOff.ID))
+  -- assert(send_cluster_bind_request(device, hub_zigbee_eui, OnOff.ID))
   -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
   -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
   -- TODO: CHECK PURPOSE OF Groups CLUSTER
-  -- Send ZigbeeMesssageTx
-  assert(pcall(device.send, device, ReadTuyaCluster(device)))
-  assert(pcall(device.send, device, OnOffButton:read(device)))
-  assert(pcall(device.send, device ,PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
-  assert(pcall(device.send, device, PowerConfiguration.attributes.BatteryVoltage:read(device)))
-  assert(pcall(device.send, device, OnOffButton:write(device, 0x30)))
-  assert(pcall(device.send, device, OnOffButton:read(device)))
-
-  -- Submit configuration
-  assert(pcall(device.configure, device))
-  assert(pcall(device.refresh, device))
+  assert(send_zigbee_message(device, ReadTuyaCluster(device)))
+  assert(send_zigbee_message(device, OnOffButton:read(device)))
+  assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
+  assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryVoltage:read(device)))
+  assert(send_zigbee_message(device, OnOffButton:write(device, 0x30)))
+  assert(send_zigbee_message(device, OnOffButton:read(device)))
 end
 
 
