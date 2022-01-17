@@ -19,9 +19,9 @@ local OnOff = require "st.zigbee.zcl.clusters".OnOff
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaCluster = require "custom".ReadTuyaCluster
 
-local send_cluster_bind_request = require "emitter.emitter".send_cluster_bind_request
-local send_attr_configure_reporting = require "emitter.emitter".send_attr_configure_reporting
-local send_button_capability_setup = require "emitter.emitter".send_button_capability_setup
+local send_cluster_bind_request = require "emitter".send_cluster_bind_request
+local send_attr_configure_reporting = require "emitter".send_attr_configure_reporting
+local send_button_capability_setup = require "emitter".send_button_capability_setup
 
 
 -- generates endpoint reference based

@@ -24,7 +24,7 @@ local init = require "lifecycles".init
 local added = require "lifecycles".added
 local do_configure = require "lifecycles".do_configure
 
-local emitter = require "emitter".emitter
+local emitter = require "emitter"
 
 
 -- Edge Driver Configuration
@@ -51,6 +51,7 @@ local driver_config = {
     }
   }
 }
+
 
 local driver = ZigbeeDriver("button-battery", driver_config)
 driver:run()
