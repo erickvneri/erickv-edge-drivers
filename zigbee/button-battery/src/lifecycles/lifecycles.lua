@@ -15,7 +15,6 @@ local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
 
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
--- local OnOff = require "st.zigbee.zcl.clusters".OnOff
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaCluster = require "custom".ReadTuyaCluster
 
@@ -111,7 +110,6 @@ local function do_configure(driver, device)
   -- if device supports it
   --]]
   assert(device:supports_capability_by_id(button.ID), "<button> capability not supported")
-  -- assert(send_cluster_bind_request(device, hub_zigbee_eui, OnOff.ID))
   -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
   -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
   -- TODO: CHECK PURPOSE OF Groups CLUSTER
