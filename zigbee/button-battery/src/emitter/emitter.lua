@@ -143,11 +143,14 @@ end
 --
 -- @param device table
 -- @param attr   table
-local function send_attr_configure_reporting(device, attr)
+-- @param opts   table
+--   example:
+--   { min_rep: int, max_rep: int, min_change: int }
+local function send_attr_configure_reporting(device, attr, opts)
   return pcall(
     device.send,
     device,
-    attr:configure_reporting(device, 0, 300, 1))
+    attr:configure_reporting(device, opts.min_rep, opts.max_rep, opts.min_change))
 end
 
 
