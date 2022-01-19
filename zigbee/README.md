@@ -24,4 +24,4 @@ zigbeeManufacturer:
 ### Features:
 
 - 3 Button states *(pushed, double, held)* on every button differentiated by components.
-- The **battery level** is handled by the `main` component and is being **refreshed every hour** or by **pressing button no.2**.
+- The **battery level** is handled by the `main` component and is being automatically **refreshed every 6 hours** or whenever you **press button no.2**.
