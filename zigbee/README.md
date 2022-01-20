@@ -11,17 +11,29 @@ If your device isn't supported and you want to contribute to this repository, yo
 ## Drivers
 
 ### [button-battery](./button-battery)
-
-
 ```yaml
 zigbeeManufacturer:
   # 4-gang MOES Scene Switch
   manufacturer: "_TZ3000_xabckq1v"
   model: "TS004F"
 ```
-**Note**: This Edge driver was initially created to integrate a [4-gang MOES Scene Switch](https://es.aliexpress.com/item/1005001490468150.html?spm=a2g0o.productlist.0.0.30b57d144tWeK1&algo_pvid=2bf0c543-688c-4fc8-a087-e61d67a064a3&algo_exp_id=2bf0c543-688c-4fc8-a087-e61d67a064a3-3&pdp_ext_f=%7B%22sku_id%22%3A%2212000016323568282%22%7D&pdp_pi=-1%3B13.93%3B-1%3BUSD+1.31%40salePrice%3BUSD%3Bsearch-mainSearch).
 
-### Features:
+### [switch-level-color-bulb](./switch-level-color-bulb)
+```yaml
+zigbeeManufacturer:
+  # Sengled Soft White Bulb
+  manufacturer: "sengled"
+  model: "E11-G13"
+```
 
-- 3 Button states *(pushed, double, held)* on every button differentiated by components.
-- The **battery level** is handled by the `main` component and is being automatically **refreshed every 6 hours** or whenever you **press button no.2**.
+### [switch-power-outlet](./switch-power-outlet)
+```yaml
+zigbeeManufacturer:
+  # Samjin/SmartThings Outlet
+    manufacturer: "Samjin"
+    model: "outlet"
+
+  # Sonoff Outlet
+    manufacturer: "SONOFF"
+    model: "S31 Lite zb"
+```
