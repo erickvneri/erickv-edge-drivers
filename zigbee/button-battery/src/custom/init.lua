@@ -13,5 +13,5 @@
 -- limitations under the License.
 return {
   OnOffButton = require "custom.OnOffButton",
-  ReadTuyaCluster = require "custom.ReadTuyaCluster"
+  ReadTuyaSpecific = require "custom.ReadTuyaSpecific"
 }

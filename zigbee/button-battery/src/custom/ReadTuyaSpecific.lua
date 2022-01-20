@@ -12,8 +12,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 local read_manufacturer_specific_attribute = require "st.zigbee.cluster_base".read_manufacturer_specific_attribute
-local TuyaClusterId = 0xE001
-local TuyaClusterAttrId = 0xD011
+local TuyaSpecificClusterId = 0xE001
+local TuyaSpecificAttrId = 0xD011
 
 
 -- returns formatted ReadAttribute
@@ -21,12 +21,12 @@ local TuyaClusterAttrId = 0xD011
 -- device
 --
 -- @param device ZigbeeDevice
-local function ReadTuyaCluster(device)
+local function ReadTuyaSpecific(device)
   return assert(read_manufacturer_specific_attribute(
     device,
-    TuyaClusterId,
-    TuyaClusterAttrId, 1))
+    TuyaSpecificClusterId,
+    TuyaSpecificAttrId, 1))
 end
 
 
-return ReadTuyaCluster
+return ReadTuyaSpecific
