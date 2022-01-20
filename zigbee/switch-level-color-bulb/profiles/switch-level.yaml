@@ -34,7 +34,7 @@ preferences:
     name: transitionTime
     description: "Time-lapse to change from the current level state to a new level"
     required: false
-    preferenceType: integer
+    preferenceType: number
     definition:
       # default as arg2 in Level.MoveToLevelWithOnOff cluster command
       default: 0
