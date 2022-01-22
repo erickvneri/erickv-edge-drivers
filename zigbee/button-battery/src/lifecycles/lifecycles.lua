@@ -15,8 +15,10 @@ local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
 
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
+local Basic = require "st.zigbee.zcl.clusters".Basic
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaSpecific = require "custom".ReadTuyaSpecific
+local UnkownBasic = require "custom".UnknownBasic
 
 local send_cluster_bind_request = require "emitter".send_cluster_bind_request
 local send_attr_configure_reporting = require "emitter".send_attr_configure_reporting
@@ -117,6 +119,13 @@ local function do_configure(driver, device)
   -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
   -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
   -- TODO: CHECK PURPOSE OF Groups CLUSTER
+  -- TODO: CHECK PURPOSE OF Basic[0xFFDF]
+  assert(send_zigbee_message(device, Basic.attributes.ManufacturerName:read(device)))
+  assert(send_zigbee_message(device, Basic.attributes.ZCLVersion:read(device)))
+  assert(send_zigbee_message(device, Basic.attributes.ApplicationVersion:read(device)))
+  assert(send_zigbee_message(device, Basic.attributes.ModelIdentifier:read(device)))
+  assert(send_zigbee_message(device, Basic.attributes.PowerSource:read(device)))
+  assert(send_zigbee_message(device, UnkownBasic:read(device)))
   assert(send_zigbee_message(device, ReadTuyaSpecific(device)))
   assert(send_zigbee_message(device, OnOffButton:read(device)))
   assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
