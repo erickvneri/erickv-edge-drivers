@@ -8,3 +8,7 @@
     short-hand automations based on `button.supportedButtonValues`.
   - Battery state handled by `main` component.
   - Automatic battery updates every 6 hours.
+
+> v1.0.1
+  - Provided support for 3-Button MOES Scene Switch.
+  - New multi-component *device profile*.
