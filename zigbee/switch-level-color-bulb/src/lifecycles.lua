@@ -39,8 +39,6 @@ end
 --   - doConfigure
 -- ]]
 local function do_configure(driver, device)
-  -- In order to wake device
-  device:refresh()
 
   local function configure_reporting_by_cluster(device, driver, cluster, attribute)
     -- [[
@@ -56,11 +54,11 @@ local function do_configure(driver, device)
       device,
       cluster.ID,
       driver.environment_info.hub_zigbee_eui))
-    -- configure_reporting
-    device:send(attribute:configure_reporting(device,0,300,1))
-    -- read
-    device:send(attribute:read(device))
-  end
+      -- configure_reporting
+      device:send(attribute:configure_reporting(device,0,300,1))
+      -- read
+      device:send(attribute:read(device))
+    end
 
   -- Configure Switch
   -- Capability (OnOff cluster)
@@ -76,6 +74,8 @@ local function do_configure(driver, device)
   device:send(Level.attributes.CurrentLevel:read(device))
 
   -- configure
+  -- In order to wake device
+  device:refresh()
   device:configure()
 end
 
