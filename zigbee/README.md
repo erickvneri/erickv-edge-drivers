@@ -15,9 +15,13 @@ _(**Note**: You can also find in-develop edge drivers at **[dev-@erickv Shared D
 ### [button-battery](./button-battery)
 ```yaml
 zigbeeManufacturer:
-  # 4-gang MOES Scene Switch
+  # MOES 4-Button Scene Switch
   manufacturer: "_TZ3000_xabckq1v"
   model: "TS004F"
+
+  # MOES 3-Button Scene Switch        # FIXME:  AWAITING FOR CONFIRMATION
+  manufacturer: "_TZ3000_gbm10jnj"    # FIXME:  TO DEFINE IF IT'S SUPPORTED
+  model: "TS0043"
 ```
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)
