@@ -6,6 +6,8 @@ If your device isn't supported and you want to contribute to this repository, yo
 
 **These drivers are available at the **[@erickv Shared Drivers](https://api.smartthings.com/invite/Q1jP18n4oZML)** channel.**
 
+_(**Note**: You can also find in-develop edge drivers at **[dev-@erickv Shared Drivers](https://api.smartthings.com/invite/pbMvQvqgpGjO)** channel.)_
+
 ---
 
 ## Drivers
