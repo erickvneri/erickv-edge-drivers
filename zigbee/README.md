@@ -22,6 +22,10 @@ zigbeeManufacturer:
   # MOES 3-Button Scene Switch        # FIXME:  AWAITING FOR CONFIRMATION
   manufacturer: "_TZ3000_gbm10jnj"    # FIXME:  TO DEFINE IF IT'S SUPPORTED
   model: "TS0043"
+
+  # Modmote TS004F variation
+  manufacturer: "_TZ3000_czuyt8lz"
+  model: "TS004F"
 ```
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)

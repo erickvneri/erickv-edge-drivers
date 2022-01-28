@@ -12,3 +12,4 @@
 > v1.0.1
   - Provided support for 3-Button MOES Scene Switch.
   - New multi-component *device profile*.
+  - Support for TS004F model variation.
