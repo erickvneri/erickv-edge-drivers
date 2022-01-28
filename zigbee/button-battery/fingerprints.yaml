@@ -25,3 +25,10 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_gbm10jnj"
     model: "TS0043"
     deviceProfileName: 3-button-battery
+
+  # Modmote TS004F variation
+  - id: "_TZ3000_czuyt8lz/TS004F"
+    deviceLabel: "Modmote"
+    manufacturer: "_TZ3000_czuyt8lz"
+    model: "TS004F"
+    deviceProfileName: 4-button-battery
