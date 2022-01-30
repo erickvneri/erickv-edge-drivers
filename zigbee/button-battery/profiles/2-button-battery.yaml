@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: 3-button-battery
+name: 2-button-battery
 components:
   - id: main
     capabilities:
@@ -21,13 +21,6 @@ components:
       - name: RemoteController
 
   - id: button2
-    capabilities:
-      - id: button
-        version: 1
-    categories:
-      - name: RemoteController
-
-  - id: button3
     capabilities:
       - id: button
         version: 1

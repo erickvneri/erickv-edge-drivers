@@ -17,8 +17,6 @@ components:
     capabilities:
       - id: button
         version: 1
-      - id: battery
-        version: 1
     categories:
       - name: RemoteController
 
@@ -39,6 +37,13 @@ components:
   - id: button4
     capabilities:
       - id: button
+        version: 1
+    categories:
+      - name: RemoteController
+
+  - id: battery
+    capabilities:
+      - id: battery
         version: 1
     categories:
       - name: RemoteController
