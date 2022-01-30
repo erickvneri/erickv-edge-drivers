@@ -13,3 +13,8 @@
   - Provided support for 3-Button MOES Scene Switch.
   - New multi-component *device profile*.
   - Support for TS004F model variation.
+  - Testing support for 3 and 2-Button MOES versions.
+
+> v1.1.0
+  - Updated device profile in pro of user experience.
+  - Assigned battery capability to "battery" component.
