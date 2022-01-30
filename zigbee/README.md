@@ -19,9 +19,13 @@ zigbeeManufacturer:
   manufacturer: "_TZ3000_xabckq1v"
   model: "TS004F"
 
-  # MOES 3-Button Scene Switch        # FIXME:  AWAITING FOR CONFIRMATION
-  manufacturer: "_TZ3000_gbm10jnj"    # FIXME:  TO DEFINE IF IT'S SUPPORTED
+  # MOES 3-Button Scene Switch   (SUCCESS TBD)
+  manufacturer: "_TZ3000_gbm10jnj"
   model: "TS0043"
+
+  # MOES 2-Button Scene Switch   (SUCCESS TBD)
+  manufacturer: "_TZ3000_dfgbtub0"
+  model: "TS0042"
 
   # Modmote TS004F variation
   manufacturer: "_TZ3000_czuyt8lz"
@@ -47,3 +51,11 @@ zigbeeManufacturer:
     manufacturer: "SONOFF"
     model: "S31 Lite zb"
 ```
+
+---
+
+## Acknowledgements
+
+Special thanks to the members of the _SmartThings Community_ that not only helped me to
+clarify a lot of Zigbee-specific concepts and inquiries, but also those that made this _Edge
+Driver_ much more reusable and important that I was expecting. Again many thanks guys!
