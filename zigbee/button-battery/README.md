@@ -18,3 +18,4 @@
 > v1.1.0
   - Updated device profile in pro of user experience.
   - Assigned battery capability to "battery" component.
+  - Added 2 fingerprints for 3 and 4-button generic devices.
