@@ -97,15 +97,12 @@ end
 -- @param device  ZigbeeDevice
 -- @param command ZigbeeMessageRx
 local function send_battery_level_event(_, device, command)
-  local MODMOTE_MANUFACTURER_ID = "_TZ3000_czuyt8lz"
-  local manufacturer = device:get_manufacturer()
-  local level =
-    manufacturer ~= MODMOTE_MANUFACTURER_ID and (command.value / 2) or (command.value * 10)
+  local level = math.floor(command.value / 2)
 
   return assert(_send_device_event(
     0,
     device,
-    battery.battery(math.floor(level))))
+    battery.battery(level)))
 end
 
 
