@@ -23,13 +23,21 @@ zigbeeManufacturer:
   manufacturer: "_TZ3000_gbm10jnj"
   model: "TS0043"
 
-  # MOES 2-Button Scene Switch   (SUCCESS TBD)
+  # MOES 2-Button Scene Switch
   manufacturer: "_TZ3000_dfgbtub0"
   model: "TS0042"
 
   # Modmote TS004F variation
   manufacturer: "_TZ3000_czuyt8lz"
   model: "TS004F"
+
+  # 4-Button Remote
+  manufacturer: "_TZ3000_vp6clf9d"
+  model: "TS0044"
+
+  # 3-Button Remote
+  manufacturer: "_TZ3000_bi6lpsew"
+  model: "TS0043"
 ```
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)
