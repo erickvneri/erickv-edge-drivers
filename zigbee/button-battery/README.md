@@ -19,3 +19,9 @@
   - Updated device profile in pro of user experience.
   - Assigned battery capability to "battery" component.
   - Added 2 fingerprints for 3 and 4-button generic devices.
+
+> v1.2.0
+  - Added custom presentation reference to all profiles
+    which allowed devices to render orderly at `detailView`.
+  - Assigned **Battery capability** as dashboard state.
+  - Assigned Battery capability to `battery` component.

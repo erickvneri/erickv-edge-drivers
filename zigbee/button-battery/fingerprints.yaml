@@ -40,14 +40,14 @@ zigbeeManufacturer:
     model: "TS004F"
     deviceProfileName: 4-button-battery
 
-  # 4-Button Remote
+  # Eardatek 4-Button Remote
   - id: "_TZ3000_vp6clf9d/TS0044"
     deviceLabel: "Scene Switch"
     manufacturer: "_TZ3000_vp6clf9d"
     model: "TS0044"
     deviceProfileName: 4-button-battery
 
-  # 3-Button Remote
+  # LoraTap 3-Button Remote
   - id: "_TZ3000_bi6lpsew/TS0043"
     deviceLabel: "Scene Switch"
     manufacturer: "_TZ3000_bi6lpsew"

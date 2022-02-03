@@ -51,3 +51,5 @@ metadata:
   deviceType: RemoteController
   ocfDeviceType: x.com.st.d.remotecontroller
   deviceTypeId: RemoteController
+  mnmn: "SmartThingsCommunity"
+  vid: "ba39e9fd-6d5d-355a-85e5-fdfea93a16e3"
