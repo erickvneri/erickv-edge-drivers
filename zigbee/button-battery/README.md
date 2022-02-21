@@ -25,3 +25,12 @@
     which allowed devices to render orderly at `detailView`.
   - Assigned **Battery capability** as dashboard state.
   - Assigned Battery capability to `battery` component.
+
+> v1.3.0
+  - New TS0043 alternative fingerprint for the MOES
+    3-Button Scene Switch.
+
+> v1.3.1
+  - Fixed minimal battery report time from 300s to 3600s
+    to avoid battery consumption on not-so-sleepy devices.
+  - Patched fingerprint for **Yagusmart** devices.
