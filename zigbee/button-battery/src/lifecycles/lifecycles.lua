@@ -104,7 +104,7 @@ local function do_configure(driver, device)
     device,
     PowerConfiguration.attributes.BatteryPercentageRemaining,
     -- min report time 5mins, max report time 6 hours, report on minimal change
-    { min_rep=300, max_rep=21600, min_change=1 }),
+    { min_rep=3600, max_rep=21600, min_change=1 }),
     err.."PowerConfiguration.BatteryPercentageRemaining")
 
 
