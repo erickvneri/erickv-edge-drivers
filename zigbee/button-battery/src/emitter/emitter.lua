@@ -100,7 +100,7 @@ local function send_battery_level_event(_, device, command)
   local level = math.floor(command.value / 2)
 
   return assert(_send_device_event(
-    1,
+    0,
     device,
     battery.battery(level)))
 end

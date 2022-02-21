@@ -31,6 +31,8 @@ local send_zigbee_message = require "emitter".send_zigbee_message
 --
 -- @param component_id string
 local function _component_to_endpoint(_, component_id)
+    if component_id == "battery" then return 0 end
+
     local ep = component_id:match("button(%d)")
     return ep and tonumber(ep) or 1
 end
@@ -42,6 +44,8 @@ end
 --
 -- @param ep number (endpoint)
 local function _endpoint_to_component(_, ep)
+  if ep == 0 then return "battery" end
+
   return tonumber(ep) == 1 and "main" or "button"..ep
 end
 
@@ -67,7 +71,7 @@ end
 local function added(_, device)
   return send_button_capability_setup(
     device,
-    device:component_count(),
+    device:component_count() - 1,  -- exclude "battery" component
     { "pushed", "double", "held" })
 end
 
@@ -100,7 +104,7 @@ local function do_configure(driver, device)
     device,
     PowerConfiguration.attributes.BatteryPercentageRemaining,
     -- min report time 5mins, max report time 6 hours, report on minimal change
-    { min_rep=300, max_rep=21600, min_change=1 }),
+    { min_rep=3600, max_rep=21600, min_change=1 }),
     err.."PowerConfiguration.BatteryPercentageRemaining")
 
 

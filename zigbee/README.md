@@ -6,6 +6,8 @@ If your device isn't supported and you want to contribute to this repository, yo
 
 **These drivers are available at the **[@erickv Shared Drivers](https://api.smartthings.com/invite/Q1jP18n4oZML)** channel.**
 
+_(**Note**: You can also find in-develop edge drivers at **[dev-@erickv Shared Drivers](https://api.smartthings.com/invite/pbMvQvqgpGjO)** channel.)_
+
 ---
 
 ## Drivers
@@ -13,9 +15,29 @@ If your device isn't supported and you want to contribute to this repository, yo
 ### [button-battery](./button-battery)
 ```yaml
 zigbeeManufacturer:
-  # 4-gang MOES Scene Switch
+  # MOES 4-Button Scene Switch
   manufacturer: "_TZ3000_xabckq1v"
   model: "TS004F"
+
+  # MOES 3-Button Scene Switch   (SUCCESS TBD)
+  manufacturer: "_TZ3000_gbm10jnj"
+  model: "TS0043"
+
+  # MOES 2-Button Scene Switch
+  manufacturer: "_TZ3000_dfgbtub0"
+  model: "TS0042"
+
+  # Modmote TS004F variation
+  manufacturer: "_TZ3000_czuyt8lz"
+  model: "TS004F"
+
+  # 4-Button Remote
+  manufacturer: "_TZ3000_vp6clf9d"
+  model: "TS0044"
+
+  # 3-Button Remote
+  manufacturer: "_TZ3000_bi6lpsew"
+  model: "TS0043"
 ```
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)
@@ -37,3 +59,11 @@ zigbeeManufacturer:
     manufacturer: "SONOFF"
     model: "S31 Lite zb"
 ```
+
+---
+
+## Acknowledgements
+
+Special thanks to the members of the _SmartThings Community_ that not only helped me to
+clarify a lot of Zigbee-specific concepts and inquiries, but also those that made this _Edge
+Driver_ much more reusable and important that I was expecting. Again many thanks guys!
