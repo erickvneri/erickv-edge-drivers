@@ -34,3 +34,4 @@
   - Fixed minimal battery report time from 300s to 3600s
     to avoid battery consumption on not-so-sleepy devices.
   - Patched fingerprint for **Yagusmart** devices.
+  - Added Loratap fingerprint for TS0044.
