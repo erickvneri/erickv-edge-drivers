@@ -34,4 +34,8 @@
   - Fixed minimal battery report time from 300s to 3600s
     to avoid battery consumption on not-so-sleepy devices.
   - Patched fingerprint for **Yagusmart** devices.
-  - Added Loratap fingerprint for TS0044.
+
+> v1.3.2
+  - Added SmartKnob fingerprint and single-button profile.
+  - Added 2-button Loratap fingerprint _(TS0044)_.
+  - Added Yagustmart 2-button fingerprint _(TS0012)_.
