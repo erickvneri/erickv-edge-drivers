@@ -61,5 +61,5 @@ local driver_config = {
 
 
 --------------------------- Driver Init ---------------------------
-local driver = ZigbeeDriver("switch_power_outlet", driver_config)
+local driver = ZigbeeDriver("switch-power-v1.0.0", driver_config)
 driver:run()
