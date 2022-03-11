@@ -53,5 +53,5 @@ local driver_config = {
 }
 
 
-local driver = ZigbeeDriver("button-battery-v1.3.1", driver_config)
+local driver = ZigbeeDriver("button-battery-v1.4.0", driver_config)
 driver:run()

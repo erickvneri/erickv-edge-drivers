@@ -14,8 +14,11 @@
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
 
+local Uint16 = require "st.zigbee.data_types".Uint16
+
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
 local Basic = require "st.zigbee.zcl.clusters".Basic
+local Groups = require "st.zigbee.zcl.clusters".Groups
 local OnOffButton = require "custom".OnOffButton
 local ReadTuyaSpecific = require "custom".ReadTuyaSpecific
 local UnkownBasic = require "custom".UnknownBasic
@@ -87,6 +90,9 @@ end
 local function do_configure(driver, device)
   local err = "failed to configure device: "
   local hub_zigbee_eui = driver.environment_info.hub_zigbee_eui
+  local operation_mode = device.preferences.operationMode == "SCENE" and 0x01 or 0x00
+  local zigbee_group = Uint16(device.preferences.zigbeeGroup)
+  local override_group_on_update = device.preferences.overrideGroupOnUpdate
 
   -- [[
   -- battery capability setup
@@ -107,35 +113,52 @@ local function do_configure(driver, device)
     { min_rep=3600, max_rep=21600, min_change=1 }),
     err.."PowerConfiguration.BatteryPercentageRemaining")
 
-
-  -- TODO: DEFINE THE IMPORTANCE TO
+  -- TODO: IS IT IMPORTANT?
   -- SUBSCRIBE TO BATTERY VOLTAGE
   -- assert(send_attr_configure_reporting(
   --   device, PowerConfiguration.attributes.BatteryVoltage),
   --   err.."PowerConfiguration.BatteryVoltage")
 
-
   --[[
   -- button capability setup
   -- if device supports it
+  --
+  -- The following sequence of Zigbee Messages
+  -- defines the steps to guarantee the compatibility
+  -- at network level.
   --]]
   assert(device:supports_capability_by_id(button.ID), "<button> capability not supported")
-  -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
-  -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
-  -- TODO: CHECK PURPOSE OF Groups CLUSTER
-  -- TODO: CHECK PURPOSE OF Basic[0xFFDF]
+
+  -- read metadata from Basic
   assert(send_zigbee_message(device, Basic.attributes.ManufacturerName:read(device)))
   assert(send_zigbee_message(device, Basic.attributes.ZCLVersion:read(device)))
   assert(send_zigbee_message(device, Basic.attributes.ApplicationVersion:read(device)))
   assert(send_zigbee_message(device, Basic.attributes.ModelIdentifier:read(device)))
   assert(send_zigbee_message(device, Basic.attributes.PowerSource:read(device)))
   assert(send_zigbee_message(device, UnkownBasic:read(device)))
+
+  -- read tuya-specific
   assert(send_zigbee_message(device, ReadTuyaSpecific(device)))
   assert(send_zigbee_message(device, OnOffButton:read(device)))
+
+  -- read battery values
   assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
   assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryVoltage:read(device)))
-  assert(send_zigbee_message(device, OnOffButton:write(device, 0x30)))
+
+  -- device mode definition
+  assert(send_zigbee_message(device, OnOffButton:write(device, operation_mode)))
   assert(send_zigbee_message(device, OnOffButton:read(device)))
+
+  -- zigbee group configuration
+  if override_group_on_update then
+    assert(send_zigbee_message(device, Groups.server.commands.RemoveAllGroups(device)))
+  end
+  assert(send_zigbee_message(device, Groups.server.commands.AddGroup(device, zigbee_group, "dimmer mode")))
+  assert(send_zigbee_message(device, Groups.server.commands.ViewGroup(device)))
+  assert(send_zigbee_message(device, Groups.server.commands.GetGroupMembership(device, { zigbee_group })))
+
+  -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
+  -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
 end
 
 

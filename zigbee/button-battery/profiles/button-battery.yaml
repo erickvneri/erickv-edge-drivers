@@ -32,3 +32,31 @@ metadata:
   deviceTypeId: RemoteController
   mnmn: "SmartThingsCommunity"
   vid: "ba39e9fd-6d5d-355a-85e5-fdfea93a16e3"
+
+preferences:
+  - title: "Mode"
+    description: "On SCENE MODE device will unicast button events. On DIMMER MODE device will broadcast messages within the Zigbee group (Warning: Events won't propagate the ecosystem, only the Zigbee network)"
+    required: true
+    name: operationMode
+    preferenceType: enumeration
+    definition:
+      options:
+        SCENE: "Scene Mode"
+        DIMMER: "Dimmer Mode"
+      default: "SCENE"
+
+  - title: "Group"
+    description: "Zigbee Group for broadcast Zigbee commands Note: this is an exclusive option for DIMMER MODE and make sure other devices are within same Group."
+    name: zigbeeGroup
+    preferenceType: integer
+    definition:
+      default: 0
+      minimum: 0
+      maximum: 65535
+
+  - title: "Override Group On Update"
+    description: "With this option you can decide either to keep the associated Zigbee Group or remove device from the Group(s) on the \"Group\" has been redefined."
+    name: overrideGroupOnUpdate
+    preferenceType: boolean
+    definition:
+      default: true
