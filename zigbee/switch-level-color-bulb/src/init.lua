@@ -19,6 +19,7 @@ local Level = clusters.Level
 -- local modules
 local do_configure = require 'lifecycles'.do_configure
 local device_init = require 'lifecycles'.device_init
+local info_changed = require 'lifecycles'.info_changed
 local controller = require 'controller'
 
 
@@ -29,7 +30,8 @@ local driver_config = {
   },
   lifecycle_handlers = {
     init = device_init,
-    doConfigure = do_configure
+    doConfigure = do_configure,
+    infoChanged = info_changed
   },
   zigbee_handlers = {
     attr = {
@@ -61,5 +63,5 @@ local driver_config = {
 }
 
 
-local driver = ZigbeeDriver("switch_level_color", driver_config)
+local driver = ZigbeeDriver("switch-level-v1.2.0", driver_config)
 driver:run()

@@ -50,3 +50,23 @@ preferences:
     preferenceType: boolean
     definition:
       default: false
+
+  # zigbee group for network-based
+  # command handling.
+  - title: "Group"
+    description: "Zigbee Group for broadcast Zigbee commands Note: this is an exclusive option for DIMMER MODE and make sure other devices are within same Group."
+    name: zigbeeGroup
+    preferenceType: integer
+    definition:
+      default: 0
+      minimum: 0
+      maximum: 65535
+
+  # allows to override the enrolled
+  # zigbee group after a new one is set
+  - title: "Override Group On Update"
+    description: "With this option you can decide either to keep the associated Zigbee Group or remove device from the Group(s) on the \"Group\" has been redefined."
+    name: overrideGroupOnUpdate
+    preferenceType: boolean
+    definition:
+      default: true

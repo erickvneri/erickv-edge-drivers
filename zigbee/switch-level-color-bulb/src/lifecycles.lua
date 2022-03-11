@@ -18,6 +18,9 @@ local device_mgmt = require 'st.zigbee.device_management'
 local clusters = require 'st.zigbee.zcl.clusters'
 local OnOff = clusters.OnOff
 local Level = clusters.Level
+local Groups = clusters.Groups
+
+local Uint16 = require "st.zigbee.data_types".Uint16
 
 
 ---------------------------------------
@@ -73,6 +76,17 @@ local function do_configure(driver, device)
   assert(device:supports_capability_by_id(caps.switchLevel.ID), '<SwitchLevel> not supported')
   device:send(Level.attributes.CurrentLevel:read(device))
 
+
+  --[[
+    TODO: FOR V1.4.0
+      - PROFILE PREFERENCE FOR GROUP ID DEF
+      - HANDLE INTEGER_TO_HEX INPUT
+      - SET GROUP ID AT DO_CONFIGURE
+  ]]
+
+  device:send(Groups.server.commands.ViewGroup(device))
+  device:send(Groups.server.commands.AddGroup(device, 0x8004, "dimmer mode"))
+  device:send(Groups.server.commands.GetGroupMembership(device, { 0x8004 }))
   -- configure
   -- In order to wake device
   device:refresh()
@@ -86,4 +100,19 @@ local function device_init(driver, device)
   do_configure(driver, device)
 end
 
-return { do_configure=do_configure, device_init=device_init }
+local function info_changed(_, device)
+  local override_group_on_update = device.preferences.overrideGroupOnUpdate
+  local zigbee_group = Uint16(device.preferences.zigbeeGroup)
+
+  if override_group_on_update then
+    device:send(Groups.server.commands.RemoveAllGroups(device))
+  end
+  device:send(Groups.server.commands.AddGroup(device, zigbee_group, "dimmer mode"))
+end
+
+
+return {
+  do_configure=do_configure,
+  device_init=device_init,
+  info_changed=info_changed
+}

@@ -19,3 +19,8 @@
   - Patched Transition Time data type from **Integer** to
     **Number** to allow configuration of decimals and improve
     UX while setting up automations.
+
+> v1.2.0
+  - Support of Groups Zigbee Cluster.
+  - New _preference_ allowing Zigbee Group definition.
+  - New _preference_ to override Zigbee Groups on update.
