@@ -50,7 +50,7 @@
 > v1.4.1
   - New Yagusmart 2-Button In Wall fingerprint.
   - Fixed distribution of fingerprints.
-  - Fixed profiles for In Wall Switches.
+  - Fixed profiles and presentations for In Wall Switches.
 
 > v1.4.2
   - Switch Level support for Smart Knob.
