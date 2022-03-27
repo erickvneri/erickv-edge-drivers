@@ -11,7 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: "button-battery-v1.4.2"
-packageKey: "button-battery-v1.4.2"
-permissions:
-  zigbee: {}
+name: 2-button
+components:
+  - id: main
+    capabilities:
+      - id: button
+        version: 1
+    categories:
+      - name: RemoteController
+
+  - id: button2
+    capabilities:
+      - id: button
+        version: 1
+    categories:
+      - name: RemoteController
+
+metadata:
+  deviceType: RemoteController
+  ocfDeviceType: x.com.st.d.remotecontroller
+  deviceTypeId: RemoteController
+  mnmn: "SmartThingsCommunity"
+  vid: "1a1670a5-1c1c-316a-8ff1-2125396e1bfb"

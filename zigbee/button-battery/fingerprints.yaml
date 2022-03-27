@@ -68,21 +68,28 @@ zigbeeManufacturer:
     model: "TS0044"
     deviceProfileName: 4-button-battery
 
-# "Yagusmart" 2-Button Scene Switch
+  # "Yagusmart" 1-Button In Wall Switch
+  - id: "_TZ3000_m0btfbt7/TS0001"
+    deviceLabel: "Yagusmart Switch"
+    manufacturer: "_TZ3000_m0btfbt7"
+    model: "TS0001"
+    deviceProfileName: button
+
+  # "Yagusmart" 2-Button Scene Switch
   - id: "_TZ3000_fvh3pjaz/TS0012"
-    deviceLabel: "Scene Switch"
+    deviceLabel: "Yagusmart Switch"
     manufacturer: "_TZ3000_fvh3pjaz"
     model: "TS0012"
-    deviceProfileName: 2-button-battery
+    deviceProfileName: 2-button
 
-# "Yagusmart" 4-Button Scene Switch
+  # "Yagusmart" 4-Button Scene Switch
   - id: "_TZ3000_wkai4ga5/TS0044"
-    deviceLabel: "Scene Switch"
+    deviceLabel: "Yagusmart Switch"
     manufacturer: "_TZ3000_wkai4ga5"
     model: "TS0044"
     deviceProfileName: 4-button-battery
 
-# Smart Knob
+  # Smart Knob
   - id: "_TZ3000_4fjiwweb/TS004F"
     deviceLabel: "Smart Knob"
     manufacturer: "_TZ3000_4fjiwweb"

@@ -13,6 +13,7 @@
 -- limitations under the License.
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
+local switch_level = require "st.capabilities".switchLevel
 
 local Uint16 = require "st.zigbee.data_types".Uint16
 
@@ -62,6 +63,10 @@ end
 local function init(_, device)
   device:set_component_to_endpoint_fn(_component_to_endpoint)
   device:set_endpoint_to_component_fn(_endpoint_to_component)
+
+  if device:supports_capability_by_id(switch_level.ID) then
+    device:emit_event(switch_level.level(50))
+  end
 end
 
 
@@ -98,27 +103,26 @@ local function do_configure(driver, device)
   -- battery capability setup
   -- if device supports it
   -- ]]
-  assert(device:supports_capability_by_id(battery.ID), "<battery> capability not supported")
+  if device:supports_capability_by_id(battery.ID) then
+    -- bind request
+    assert(send_cluster_bind_request(
+      device, hub_zigbee_eui, PowerConfiguration.ID),
+      err.."BindRequest - PowerConfiguration.BatteryPercentageRemaining")
 
-  -- bind request
-  assert(send_cluster_bind_request(
-    device, hub_zigbee_eui, PowerConfiguration.ID),
-    err.."BindRequest - PowerConfiguration.BatteryPercentageRemaining")
+    -- configure reporting
+    assert(send_attr_configure_reporting(
+      device,
+      PowerConfiguration.attributes.BatteryPercentageRemaining,
+      -- min report time 5mins, max report time 6 hours, report on minimal change
+      { min_rep=3600, max_rep=21600, min_change=1 }),
+      err.."PowerConfiguration.BatteryPercentageRemaining")
 
-  -- configure reporting
-  assert(send_attr_configure_reporting(
-    device,
-    PowerConfiguration.attributes.BatteryPercentageRemaining,
-    -- min report time 5mins, max report time 6 hours, report on minimal change
-    { min_rep=3600, max_rep=21600, min_change=1 }),
-    err.."PowerConfiguration.BatteryPercentageRemaining")
-
-  -- TODO: IS IT IMPORTANT?
-  -- SUBSCRIBE TO BATTERY VOLTAGE
-  -- assert(send_attr_configure_reporting(
-  --   device, PowerConfiguration.attributes.BatteryVoltage),
-  --   err.."PowerConfiguration.BatteryVoltage")
-
+    -- TODO: IS IT IMPORTANT?
+    -- SUBSCRIBE TO BATTERY VOLTAGE
+    -- assert(send_attr_configure_reporting(
+    --   device, PowerConfiguration.attributes.BatteryVoltage),
+    --   err.."PowerConfiguration.BatteryVoltage")
+  end
   --[[
   -- button capability setup
   -- if device supports it
@@ -127,38 +131,38 @@ local function do_configure(driver, device)
   -- defines the steps to guarantee the compatibility
   -- at network level.
   --]]
-  assert(device:supports_capability_by_id(button.ID), "<button> capability not supported")
+  if device:supports_capability_by_id(button.ID) then
+    -- read metadata from Basic
+    assert(send_zigbee_message(device, Basic.attributes.ManufacturerName:read(device)))
+    assert(send_zigbee_message(device, Basic.attributes.ZCLVersion:read(device)))
+    assert(send_zigbee_message(device, Basic.attributes.ApplicationVersion:read(device)))
+    assert(send_zigbee_message(device, Basic.attributes.ModelIdentifier:read(device)))
+    assert(send_zigbee_message(device, Basic.attributes.PowerSource:read(device)))
+    assert(send_zigbee_message(device, UnkownBasic:read(device)))
 
-  -- read metadata from Basic
-  assert(send_zigbee_message(device, Basic.attributes.ManufacturerName:read(device)))
-  assert(send_zigbee_message(device, Basic.attributes.ZCLVersion:read(device)))
-  assert(send_zigbee_message(device, Basic.attributes.ApplicationVersion:read(device)))
-  assert(send_zigbee_message(device, Basic.attributes.ModelIdentifier:read(device)))
-  assert(send_zigbee_message(device, Basic.attributes.PowerSource:read(device)))
-  assert(send_zigbee_message(device, UnkownBasic:read(device)))
+    -- read tuya-specific
+    assert(send_zigbee_message(device, ReadTuyaSpecific(device)))
+    assert(send_zigbee_message(device, OnOffButton:read(device)))
 
-  -- read tuya-specific
-  assert(send_zigbee_message(device, ReadTuyaSpecific(device)))
-  assert(send_zigbee_message(device, OnOffButton:read(device)))
+    -- read battery values
+    assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
+    assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryVoltage:read(device)))
 
-  -- read battery values
-  assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryPercentageRemaining:read(device)))
-  assert(send_zigbee_message(device, PowerConfiguration.attributes.BatteryVoltage:read(device)))
+    -- device mode definition
+    assert(send_zigbee_message(device, OnOffButton:write(device, operation_mode)))
+    assert(send_zigbee_message(device, OnOffButton:read(device)))
 
-  -- device mode definition
-  assert(send_zigbee_message(device, OnOffButton:write(device, operation_mode)))
-  assert(send_zigbee_message(device, OnOffButton:read(device)))
+    -- zigbee group configuration
+    if override_group_on_update then
+      assert(send_zigbee_message(device, Groups.server.commands.RemoveAllGroups(device)))
+    end
+    assert(send_zigbee_message(device, Groups.server.commands.AddGroup(device, zigbee_group, "dimmer mode")))
+    assert(send_zigbee_message(device, Groups.server.commands.ViewGroup(device)))
+    assert(send_zigbee_message(device, Groups.server.commands.GetGroupMembership(device, { zigbee_group })))
 
-  -- zigbee group configuration
-  if override_group_on_update then
-    assert(send_zigbee_message(device, Groups.server.commands.RemoveAllGroups(device)))
+    -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
+    -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
   end
-  assert(send_zigbee_message(device, Groups.server.commands.AddGroup(device, zigbee_group, "dimmer mode")))
-  assert(send_zigbee_message(device, Groups.server.commands.ViewGroup(device)))
-  assert(send_zigbee_message(device, Groups.server.commands.GetGroupMembership(device, { zigbee_group })))
-
-  -- TODO: CHECK PURPOSE OF DeviceTemperatureConfiguration CLUSTER
-  -- TODO: CHECK PURPOSE OF Identify.IdentifyTime CLUSTER
 end
 
 

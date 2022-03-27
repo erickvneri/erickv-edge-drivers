@@ -14,10 +14,7 @@
 local build_bind_request = require "st.zigbee.device_management".build_bind_request
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
-local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
-local OnOffButton = require "custom".OnOffButton
-local ReadTuyaCluster = require "custom".ReadTuyaCluster
--- local OnOff = require "st.zigbee.zcl.clusters".OnOff
+local switch_level = require "st.capabilities".switchLevel
 
 -- button event map
 local button_event_map = {
@@ -45,6 +42,30 @@ local function _send_device_event(endpoint, device, event, state_change)
     event)
 end
 
+
+-- handles incoming ZigbeeMessageRx
+-- for Knob-specific events and
+-- sends device event accordingly
+--
+-- @param device ZigbeeDevice
+-- @param zbrx   ZigbeeMessageRx
+local function send_knob_event(_, device, zbrx)
+  local endpoint = zbrx.address_header.src_endpoint.value
+  local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
+  local curr_lvl = device.state_cache.main.switchLevel.level.value
+  local calc_lvl = event == "0" and (curr_lvl + 10) or (curr_lvl - 10)
+
+  if event == "0" and calc_lvl > 100 then
+    calc_lvl = 100
+  elseif event == "1" and calc_lvl < 0 then
+    calc_lvl = 0
+  end
+
+  return assert(_send_device_event(
+    1,
+    device,
+    switch_level.level(calc_lvl)))
+end
 
 
 -- handles incoming ZigbeeMessageRx
@@ -156,6 +177,7 @@ end
 
 return {
   -- SmartThings-specific events
+  send_knob_event=send_knob_event,
   send_button_event=send_button_event,
   send_button_capability_setup=send_button_capability_setup,
   send_battery_level_event=send_battery_level_event,
