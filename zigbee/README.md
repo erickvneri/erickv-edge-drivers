@@ -23,6 +23,10 @@ zigbeeManufacturer:
   manufacturer: "_TZ3000_gbm10jnj"
   model: "TS0043"
 
+  # MOES 3-Button Scene Switch (alt)
+  manufacturer: "_TZ3000_w8jwkczz"
+  model: "TS0043"
+
   # MOES 2-Button Scene Switch
   manufacturer: "_TZ3000_dfgbtub0"
   model: "TS0042"
@@ -31,13 +35,33 @@ zigbeeManufacturer:
   manufacturer: "_TZ3000_czuyt8lz"
   model: "TS004F"
 
-  # 4-Button Remote
+  # Eardatek 4-Button Remote
   manufacturer: "_TZ3000_vp6clf9d"
   model: "TS0044"
 
-  # 3-Button Remote
+  # LoraTap 3-Button Remote
   manufacturer: "_TZ3000_bi6lpsew"
   model: "TS0043"
+
+  # LoraTap 4-Button Remote
+  manufacturer: "_TZ3000_ee8nrt2l"
+  model: "TS0044"
+
+  # "Yagusmart" 1-Button In Wall Switch
+  manufacturer: "_TZ3000_m0btfbt7"
+  model: "TS0001"
+
+  # "Yagusmart" 2-Button Scene Switch
+  manufacturer: "_TZ3000_fvh3pjaz"
+  model: "TS0012"
+
+  # "Yagusmart" 4-Button Scene Switch
+  manufacturer: "_TZ3000_wkai4ga5"
+  model: "TS0044"
+
+  # Smart Knob
+  manufacturer: "_TZ3000_4fjiwweb"
+  model: "TS004F"
 ```
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)
