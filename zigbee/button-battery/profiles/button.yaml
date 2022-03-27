@@ -11,29 +11,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: button-battery
+name: button
 components:
   - id: main
     capabilities:
       - id: button
         version: 1
-      - id: switchLevel
-        version: 1
     categories:
       - name: RemoteController
 
-  - id: battery
-    capabilities:
-      - id: battery
-        version: 1
-    categories:
-      - name: RemoteController
 metadata:
   deviceType: RemoteController
   ocfDeviceType: x.com.st.d.remotecontroller
   deviceTypeId: RemoteController
   mnmn: "SmartThingsCommunity"
-  vid: "8e4a44b0-fb50-37c7-8bf2-3b42af37bf99"
+  vid: "ba39e9fd-6d5d-355a-85e5-fdfea93a16e3"
 
 preferences:
   - title: "Mode"

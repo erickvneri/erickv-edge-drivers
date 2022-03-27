@@ -18,6 +18,7 @@ local ZigbeeDriver = require "st.zigbee"
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
 local OnOff = require "st.zigbee.zcl.clusters".OnOff
 local OnOffButtonCommandId = 0xFD
+local OnOffSmartKnobCommandId = 0xFC
 
 -- local modules
 local init = require "lifecycles".init
@@ -46,12 +47,13 @@ local driver_config = {
     },
     cluster = {
       [OnOff.ID] = {
-        [OnOffButtonCommandId] = emitter.send_button_event
+        [OnOffButtonCommandId] = emitter.send_button_event,
+        [OnOffSmartKnobCommandId] = emitter.send_knob_event
       }
     }
   }
 }
 
 
-local driver = ZigbeeDriver("button-battery-v1.4.0", driver_config)
+local driver = ZigbeeDriver("button-battery-v1.4.2", driver_config)
 driver:run()

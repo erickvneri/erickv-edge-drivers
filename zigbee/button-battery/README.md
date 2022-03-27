@@ -38,7 +38,7 @@
 > v1.3.2
   - Added SmartKnob fingerprint and single-button profile.
   - Added 2-button Loratap fingerprint _(TS0044)_.
-  - Added Yagustmart 2-button fingerprint _(TS0012)_.
+  - Added Yagusmart 2-button fingerprint _(TS0012)_.
 
 > v1.4.0
   - New _preference_ allowing operation mode _(Dimmer vs Scene modes)_.
@@ -46,3 +46,12 @@
   - New _preference_ to override Zigbee Groups on update.
     definition_(**scene** or **dimmer** mode)_.
   - Support of Zigbee Groups _(only **TS044** and **TS04F** models)_.
+
+> v1.4.1
+  - New Yagusmart 2-Button In Wall fingerprint.
+  - Fixed distribution of fingerprints.
+  - Fixed profiles for In Wall Switches.
+
+> v1.4.2
+  - Switch Level support for Smart Knob.
+  - Fixed Smart Knob presentation.
