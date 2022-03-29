@@ -19,6 +19,8 @@ components:
         version: 1
       - id: switchLevel
         version: 1
+      - id: switch
+        version: 1
     categories:
       - name: RemoteController
 
@@ -33,7 +35,7 @@ metadata:
   ocfDeviceType: x.com.st.d.remotecontroller
   deviceTypeId: RemoteController
   mnmn: "SmartThingsCommunity"
-  vid: "8e4a44b0-fb50-37c7-8bf2-3b42af37bf99"
+  vid: "173a6dcd-4d36-3aa9-847c-bfdeddf658db"
 
 preferences:
   - title: "Mode"
