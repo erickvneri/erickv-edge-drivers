@@ -50,10 +50,11 @@ end
 -- @param device ZigbeeDevice
 -- @param zbrx   ZigbeeMessageRx
 local function send_knob_event(_, device, zbrx)
-  local endpoint = zbrx.address_header.src_endpoint.value
+  --local endpoint = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
   local curr_lvl = device.state_cache.main.switchLevel.level.value
-  local calc_lvl = event == "0" and (curr_lvl + 10) or (curr_lvl - 10)
+  local lvl_step = device.preferences.levelStep
+  local calc_lvl = event == "0" and (curr_lvl + lvl_step) or (curr_lvl - lvl_step)
 
   if event == "0" and calc_lvl > 100 then
     calc_lvl = 100

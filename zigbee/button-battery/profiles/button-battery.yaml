@@ -64,3 +64,12 @@ preferences:
     preferenceType: boolean
     definition:
       default: true
+
+  - title: "Level Step (on dimmer mode)"
+    description: "Level step indicator (dimmer mode exclusive feature)"
+    name: levelStep
+    preferenceType: integer
+    definition:
+      default: 10
+      minimum: 1
+      maximum: 100
