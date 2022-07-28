@@ -13,6 +13,10 @@
 -- limitations under the License.
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
+local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
+local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
+local switch_level = require "st.capabilities".switchLevel
+local lock = require "st.capabilities".lock
 
 local ZigbeeDriver = require "st.zigbee"
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
@@ -25,12 +29,17 @@ local init = require "lifecycles".init
 local added = require "lifecycles".added
 local info_changed = require "lifecycles".info_changed
 local do_configure = require "lifecycles".do_configure
+local emitter = require "emitter"
 
 -- Edge Driver Configuration
 local driver_config = {
   supported_capabilities = {
     battery,
-    button
+    button,
+    cooling_setpoint,
+    heating_setpoint,
+    switch_level,
+    lock
   },
   lifecycle_handlers = {
     init = init,
@@ -41,13 +50,13 @@ local driver_config = {
   zigbee_handlers = {
     attr = {
       [PowerConfiguration.ID] = {
-        -- [PowerConfiguration.attributes.BatteryPercentageRemaining.ID] = emitter.send_battery_level_event
+        [PowerConfiguration.attributes.BatteryPercentageRemaining.ID] = emitter.send_battery_level_event
       }
     },
     cluster = {
       [OnOff.ID] = {
-        -- [OnOffButtonCommandId] = emitter.send_button_event,
-        -- [OnOffSmartKnobCommandId] = emitter.send_knob_event
+        [OnOffButtonCommandId] = emitter.send_button_event,
+        [OnOffSmartKnobCommandId] = emitter.send_knob_event
       }
     }
   }

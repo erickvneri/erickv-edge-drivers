@@ -11,8 +11,13 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
+local log = require "log"
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
+local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
+local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
+local switch_level = require "st.capabilities".switchLevel
+local lock = require "st.capabilities".lock
 
 local Uint16 = require "st.zigbee.data_types".Uint16
 
@@ -38,6 +43,33 @@ local PROFILE_OPTS = {
   LEVEL = "button-battery-level",
   LOCK_UNLOCK = "button-battery-lock"
 }
+
+
+-- _set_rotation_capability_defaults populates
+-- the capability that aims to the rotation
+-- option defined via device preferences
+--
+-- @param option string
+-- @param device ZigbeeDevice
+local function _set_rotation_capability_defaults(option, prefs, device)
+  -- Populate capability based on
+    -- Rotation Option configuration
+    if option == "LEVEL" then
+      device:emit_event(switch_level.level(prefs.level))
+    elseif option == "COOLING_SETPOINT" then
+      device:emit_event(cooling_setpoint.coolingSetpoint({
+        value = prefs.coolingSetpointTemp,
+        unit = prefs.coolingSetpointUnit
+      }))
+    elseif option == "HEATING_SETPOINT" then
+      device:emit_event(heating_setpoint.heatingSetpoint({
+        value = prefs.heatingSetpointTemp,
+        unit = prefs.heatingSetpointUnit
+      }))
+    elseif option == "LOCK_UNLOCK" then
+      device:emit_event(lock.lock("locked"))
+    end
+end
 
 
 -- generates endpoint reference based
@@ -73,10 +105,6 @@ end
 local function init(_, device)
   device:set_component_to_endpoint_fn(_component_to_endpoint)
   device:set_endpoint_to_component_fn(_endpoint_to_component)
-
-  -- if device:supports_capability_by_id(switch_level.ID) then
-  --   device:emit_event(switch_level.level(100))
-  -- end
 end
 
 
@@ -96,16 +124,36 @@ end
 
 -- info_changed lifecycle
 --
--- handles infoChanged actions
+-- Among other user-defined
+-- settings that can trigger
+-- this lifecycle, it is expected
+-- to address the type of ROTATION
+-- MODE defined at the profile
+-- preferences which switches
+-- between the declared profiles
+-- aiming to the behaviour of
+-- the Smart Knob rotation.
 --
 -- @param device ZigbeeDevice
 local function info_changed(_, device)
   local prefs = device.preferences
 
-  assert(pcall(
+
+  local update_meta_success = pcall(
     device.try_update_metadata,
     device,
-    { profile = PROFILE_OPTS[prefs.rotationOption] }), "error while updating device metadata")
+    { profile = PROFILE_OPTS[prefs.rotationOption] })
+
+  if update_meta_success then
+    log.info("Profile option is now "..prefs.rotationOption)
+    assert(pcall(
+      _set_rotation_capability_defaults,
+      prefs.rotationOption,
+      prefs,
+      device), "error while populating capability for rotationOption")
+  else
+    log.error("Couldn't switch to profile option "..prefs.rotationOption)
+  end
 end
 
 
