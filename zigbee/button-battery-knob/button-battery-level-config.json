@@ -1,6 +1,6 @@
 {
     "mnmn": "SmartThingsCommunity",
-    "vid": "7cdaf81d-6582-3cca-9458-de65a2e92042",
+    "vid": "8923c737-96ef-3445-b846-4f769b2c0b56",
     "version": "0.0.1",
     "type": "profile",
     "dpInfo": [
@@ -23,8 +23,8 @@
     "dashboard": {
         "states": [
             {
-                "component": "battery",
-                "capability": "battery",
+                "component": "main",
+                "capability": "switchLevel",
                 "version": 1,
                 "idx": 0,
                 "group": "main",
@@ -79,6 +79,6 @@
         ],
         "actions": []
     },
-    "presentationId": "7cdaf81d-6582-3cca-9458-de65a2e92042",
+    "presentationId": "8923c737-96ef-3445-b846-4f769b2c0b56",
     "manufacturerName": "SmartThingsCommunity"
 }

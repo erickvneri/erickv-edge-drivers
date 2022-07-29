@@ -33,7 +33,7 @@ metadata:
   ocfDeviceType: oic.d.thermostat
   deviceTypeId: Thermostat
   mnmn: "SmartThingsCommunity"
-  vid: "b0b9515c-994f-3c38-a122-2129eb90ed46"
+  vid: "7174c535-f2fd-3a99-8ec3-69b4ab2cbe41"
 
 preferences:
   - title: "Rotation option"

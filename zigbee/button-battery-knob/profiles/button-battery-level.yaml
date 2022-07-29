@@ -33,7 +33,7 @@ metadata:
   ocfDeviceType: x.com.st.d.remotecontroller
   deviceTypeId: RemoteController
   mnmn: "SmartThingsCommunity"
-  vid: "7cdaf81d-6582-3cca-9458-de65a2e92042"
+  vid: "8923c737-96ef-3445-b846-4f769b2c0b56"
 
 preferences:
   - title: "Rotation option"

@@ -33,7 +33,7 @@ metadata:
   ocfDeviceType: oic.d.smartlock
   deviceTypeId: SmartLock
   mnmn: "SmartThingsCommunity"
-  vid: "9322ca29-55ff-3f65-938c-6e2db02ed83f"
+  vid: "17118a88-23b3-3f8d-8ddd-8ee9b75c1094"
 
 preferences:
   - title: "Rotation option"

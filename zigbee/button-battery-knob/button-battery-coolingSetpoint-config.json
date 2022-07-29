@@ -1,6 +1,6 @@
 {
     "mnmn": "SmartThingsCommunity",
-    "vid": "b0b9515c-994f-3c38-a122-2129eb90ed46",
+    "vid": "7174c535-f2fd-3a99-8ec3-69b4ab2cbe41",
     "version": "0.0.1",
     "type": "profile",
     "dpInfo": [
@@ -23,8 +23,8 @@
     "dashboard": {
         "states": [
             {
-                "component": "battery",
-                "capability": "battery",
+                "component": "main",
+                "capability": "thermostatCoolingSetpoint",
                 "version": 1,
                 "idx": 0,
                 "group": "main",
@@ -79,6 +79,6 @@
         ],
         "actions": []
     },
-    "presentationId": "b0b9515c-994f-3c38-a122-2129eb90ed46",
+    "presentationId": "7174c535-f2fd-3a99-8ec3-69b4ab2cbe41",
     "manufacturerName": "SmartThingsCommunity"
 }
