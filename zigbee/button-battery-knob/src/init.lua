@@ -47,6 +47,21 @@ local driver_config = {
     infoChanged = info_changed,
     doConfigure = do_configure
   },
+  capability_handlers = {
+    [cooling_setpoint.ID] = {
+      [cooling_setpoint.commands.setCoolingSetpoint.NAME] = emitter.send_cooling_setpoint_event
+    },
+    [heating_setpoint.ID] = {
+      [heating_setpoint.commands.setHeatingSetpoint.NAME] = emitter.send_heating_setpoint_event
+    },
+    [switch_level.ID] = {
+      [switch_level.commands.setLevel.NAME] = emitter.send_switch_level_event
+    },
+    [lock.ID] = {
+      [lock.commands.lock.NAME] = emitter.send_lock_event,
+      [lock.commands.unlock.NAME] = emitter.send_lock_event
+    },
+  },
   zigbee_handlers = {
     attr = {
       [PowerConfiguration.ID] = {

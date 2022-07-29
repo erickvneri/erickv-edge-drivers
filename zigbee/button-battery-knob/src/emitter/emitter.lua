@@ -11,10 +11,14 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
+local log = require "log"
 local build_bind_request = require "st.zigbee.device_management".build_bind_request
 local battery = require "st.capabilities".battery
 local button = require "st.capabilities".button
 local switch_level = require "st.capabilities".switchLevel
+local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
+local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
+local lock = require "st.capabilities".lock
 
 -- button event map
 local button_event_map = {
@@ -45,27 +49,70 @@ end
 
 -- handles incoming ZigbeeMessageRx
 -- for Knob-specific events and
--- sends device event accordingly
+-- sends device event accordingly.
+-- GenericBody: 00 = right
+-- GenericBody: 01 = left
 --
 -- @param device ZigbeeDevice
 -- @param zbrx   ZigbeeMessageRx
 local function send_knob_event(_, device, zbrx)
   --local endpoint = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
-  local curr_lvl = device.state_cache.main.switchLevel.level.value
-  local lvl_step = device.preferences.levelStep
-  local calc_lvl = event == "0" and (curr_lvl + lvl_step) or (curr_lvl - lvl_step)
+  local prefs = device.preferences
+  local option = prefs.rotationOption
+  local step = prefs.rotationStep
+  local push_state = nil
 
-  if event == "0" and calc_lvl > 100 then
-    calc_lvl = 100
-  elseif event == "1" and calc_lvl < 0 then
-    calc_lvl = 0
+  if option == "LEVEL" then
+    log.info("About to send Switch Level event")
+    local curr_lvl = device.state_cache.main.switchLevel.level.value
+    local calc_lvl = event == "0" and (curr_lvl + step) or (curr_lvl - step)
+
+    if event == "0" and calc_lvl > 100 then
+      calc_lvl = 100
+    elseif event == "1" and calc_lvl < 0 then
+      calc_lvl = 0
+    end
+    push_state = switch_level.level(calc_lvl)
+
+  elseif option == "COOLING_SETPOINT" then
+    log.info("About to send Thermostat Cooling Setpoint event")
+    local curr_temp = device.state_cache.main.thermostatCoolingSetpoint.coolingSetpoint.value
+    local calc_temp = event == "0" and (curr_temp + step) or (curr_temp - step)
+    push_state = cooling_setpoint.coolingSetpoint({
+      value = calc_temp,
+      unit = prefs.coolingSetpointUnit
+    })
+
+  elseif option == "HEATING_SETPOINT" then
+    log.info("About to send Thermostat Heating Setpoint event")
+    local curr_temp = device.state_cache.main.thermostatHeatingSetpoint.heatingSetpoint.value
+    local calc_temp = event == "0" and (curr_temp + step) or (curr_temp - step)
+    push_state = heating_setpoint.heatingSetpoint({
+      value = calc_temp,
+      unit = prefs.coolingSetpointUnit
+    })
+  elseif option == "LOCK_UNLOCK" then
+    log.info("About to send Lock event")
+    local lock_direction = prefs.lockRotation
+    local lock_state = "unlocked"
+
+    if event == "0" and lock_direction == "R" then
+      lock_state = "locked"
+    elseif event == "1" and lock_direction == "L" then
+      lock_state = "locked"
+    end
+    push_state = lock.lock(lock_state)
   end
 
-  return assert(_send_device_event(
-    1,
-    device,
-    switch_level.level(calc_lvl)))
+  if push_state ~= nil then
+    return assert(_send_device_event(
+      1,
+      device,
+      push_state
+    ))
+  end
+  log.warn("Won't send capability event due to undefined rotation option")
 end
 
 
@@ -76,6 +123,7 @@ end
 -- @param device ZigbeeDevice
 -- @param zbrx   ZigbeeMessageRx
 local function send_button_event(_, device, zbrx)
+  log.info("About to send button event from "..tostring(zbrx.body.zcl_body))
   local endpoint = zbrx.address_header.src_endpoint.value
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
   local mapped_evt = button_event_map[tonumber(event)]
@@ -126,6 +174,13 @@ local function send_battery_level_event(_, device, command)
     device,
     battery.battery(level)))
 end
+
+
+-- TODO: Configure app-incoming capability event
+local function send_cooling_setpoint_event(_, device, command)end
+local function send_heating_setpoint_event(_, device, command)end
+local function send_switch_level_event(_, device, command)end
+local function send_lock_event(_, device, command)end
 
 
 -- send ZigbeeMessageRx to device
@@ -182,6 +237,10 @@ return {
   send_button_event=send_button_event,
   send_button_capability_setup=send_button_capability_setup,
   send_battery_level_event=send_battery_level_event,
+  send_cooling_setpoint_event,
+  send_heating_setpoint_event,
+  send_switch_level_event,
+  send_lock_event,
 
   -- Zigbee-specific events
   send_zigbee_message=send_zigbee_message,
