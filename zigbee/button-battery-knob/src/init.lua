@@ -16,6 +16,7 @@ local button = require "st.capabilities".button
 local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
 local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
 local switch_level = require "st.capabilities".switchLevel
+local window_shade = require "st.capabilities".windowShade
 local lock = require "st.capabilities".lock
 
 local ZigbeeDriver = require "st.zigbee"
@@ -31,6 +32,7 @@ local info_changed = require "lifecycles".info_changed
 local do_configure = require "lifecycles".do_configure
 local emitter = require "emitter"
 
+print(emitter.send_lock_event, lock.commands.lock)
 -- Edge Driver Configuration
 local driver_config = {
   supported_capabilities = {
@@ -39,6 +41,7 @@ local driver_config = {
     cooling_setpoint,
     heating_setpoint,
     switch_level,
+    window_shade,
     lock
   },
   lifecycle_handlers = {
@@ -61,6 +64,12 @@ local driver_config = {
       [lock.commands.lock.NAME] = emitter.send_lock_event,
       [lock.commands.unlock.NAME] = emitter.send_lock_event
     },
+    -- TODO:Complete window shade integration
+    [window_shade.ID] = {
+      [window_shade.commands.open] = emitter.send_window_shade_event,
+      [window_shade.commands.close] = emitter.send_window_shade_event,
+      [window_shade.commands.pause] = emitter.send_window_shade_event
+    }
   },
   zigbee_handlers = {
     attr = {

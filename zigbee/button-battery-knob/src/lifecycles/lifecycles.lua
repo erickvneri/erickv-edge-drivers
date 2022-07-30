@@ -17,6 +17,7 @@ local button = require "st.capabilities".button
 local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
 local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
 local switch_level = require "st.capabilities".switchLevel
+local window_shade = require "st.capabilities".windowShade
 local lock = require "st.capabilities".lock
 
 local Uint16 = require "st.zigbee.data_types".Uint16
@@ -67,7 +68,12 @@ local function _set_rotation_capability_defaults(option, prefs, device)
         unit = prefs.heatingSetpointUnit
       }))
     elseif option == "LOCK_UNLOCK" then
-      device:emit_event(lock.lock("locked"))
+      local lock_state = string.lower(prefs.lockState)
+      device:emit_event(lock.lock(lock_state))
+    elseif option == "WINDOW_SHADE" then
+      device:emit_event(
+        window_shade.supportedWindowShadeCommands({ "open", "close", "pause" }))
+      device:emit_event(window_shade.windowShade(prefs.windowShadeState))
     end
 end
 

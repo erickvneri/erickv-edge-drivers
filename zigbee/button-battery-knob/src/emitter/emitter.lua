@@ -176,11 +176,78 @@ local function send_battery_level_event(_, device, command)
 end
 
 
--- TODO: Configure app-incoming capability event
-local function send_cooling_setpoint_event(_, device, command)end
-local function send_heating_setpoint_event(_, device, command)end
-local function send_switch_level_event(_, device, command)end
-local function send_lock_event(_, device, command)end
+-- send_cooling_setpoint_event handles
+-- app-incoming setCoolingSetpoint command
+--
+-- @param device  ZigbeeDevice
+-- @param command table
+local function send_cooling_setpoint_event(_, device, command)
+  local temp = command.args.setpoint
+  local unit = device.preferences.coolingSetpointUnit
+
+  return assert(_send_device_event(
+    1, -- main
+    device,
+    cooling_setpoint.coolingSetpoint({ value = temp, unit = unit })
+  ))
+end
+
+
+-- send_heating_setpoint_event handles
+-- app-incoming setHeatingSetpoint command
+--
+-- @param device  ZigbeeDevice
+-- @param command table
+local function send_heating_setpoint_event(_, device, command)
+  local temp = command.args.setpoint
+  local unit = device.preferences.heatingSetpointUnit
+
+  return assert(_send_device_event(
+    1, -- main
+    device,
+    heating_setpoint.heatingSetpoint({ value = temp, unit = unit })
+  ))
+end
+
+
+-- send_switch_level_event handles
+-- app-incoming setLevel command
+--
+-- @param device  ZigbeeDevice
+-- @param command table
+local function send_switch_level_event(_, device, command)
+  local level = command.args.level
+
+  return assert(_send_device_event(
+    1, -- main
+    device,
+    switch_level.level(level)))
+end
+
+
+-- send_lock_event handles
+-- app-incoming lock command
+--
+-- @param device  ZigbeeDevice
+-- @param command table
+local function send_lock_event(_, device, command)
+  local lock_state = command.command == "lock" and "locked" or "unlocked"
+
+  return assert(_send_device_event(
+    1, -- main
+    device,
+    lock.lock(lock_state)))
+end
+
+
+-- send_window_shade_event handles
+-- app-incoming window shade command
+--
+-- @param device  ZigbeeDevice
+-- @param command table
+local function send_window_shade_event(_, device, command)
+  for k,v in pairs(command) do print(k,v) end
+end
 
 
 -- send ZigbeeMessageRx to device
@@ -237,10 +304,11 @@ return {
   send_button_event=send_button_event,
   send_button_capability_setup=send_button_capability_setup,
   send_battery_level_event=send_battery_level_event,
-  send_cooling_setpoint_event,
-  send_heating_setpoint_event,
-  send_switch_level_event,
-  send_lock_event,
+  send_cooling_setpoint_event=send_cooling_setpoint_event,
+  send_heating_setpoint_event=send_heating_setpoint_event,
+  send_switch_level_event=send_switch_level_event,
+  send_lock_event=send_lock_event,
+  send_window_shade_event=send_window_shade_event,
 
   -- Zigbee-specific events
   send_zigbee_message=send_zigbee_message,
