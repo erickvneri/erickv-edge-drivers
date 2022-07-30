@@ -17,23 +17,23 @@ components:
     capabilities:
       - id: button
         version: 1
-      - id: lock
+      - id: windowShade
         version: 1
     categories:
-      - name: SmartLock
+      - name: Blind
 
   - id: battery
     capabilities:
       - id: battery
         version: 1
     categories:
-      - name: SmartLock
+      - name: Blind
 metadata:
-  deviceType: SmartLock
-  ocfDeviceType: oic.d.smartlock
-  deviceTypeId: SmartLock
+  deviceType: Blind
+  ocfDeviceType: oic.d.blind
+  deviceTypeId: Blind
   mnmn: "SmartThingsCommunity"
-  vid: "63e3d394-bed3-34b6-90b4-4d66c5f812bf"
+  vid: "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd"
 
 preferences:
   - title: "Rotation option"
@@ -51,9 +51,9 @@ preferences:
         WINDOW_SHADE: "Window Shade (blinds)"
       default: NONE
 
-  - title: "Lock Rotation"
-    description: "Lock Rotation (DIMMER MODE exclusive)"
-    name: lockRotation
+  - title: "Close Rotation"
+    description: "Close Rotation (DIMMER MODE exclusive)"
+    name: closeRotation
     required: true
     preferenceType: enumeration
     definition:
@@ -62,15 +62,15 @@ preferences:
         L: "Left"
       default: R
 
-  - title: "Lock State"
-    description: "Lock State"
-    name: lockState
+  - title: "Window Shade State"
+    description: "Window Shade State"
+    name: windowShadeState
     preferenceType: enumeration
     definition:
       options:
-        LOCKED: "locked"
-        UNLOCKED: "unlocked"
-      default: LOCKED
+        CLOSED: "locked"
+        OPEN: "unlocked"
+      default: CLOSED
 
   - title: "Mode"
     description: "On SCENE MODE device will unicast button events. On DIMMER MODE device will broadcast messages within the Zigbee group (Warning: Events won't propagate the ecosystem, only the Zigbee network)"

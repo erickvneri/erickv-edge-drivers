@@ -48,6 +48,7 @@ preferences:
         COOLING_SETPOINT: "Thermostat Cooling Setpoint"
         HEATING_SETPOINT: "Thermostat Heating Setpoint"
         LOCK_UNLOCK: "Lock"
+        WINDOW_SHADE: "Window Shade (blinds)"
       default: NONE
 
   - title: "Rotation Step"

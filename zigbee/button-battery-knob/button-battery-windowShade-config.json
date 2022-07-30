@@ -1,6 +1,6 @@
 {
     "mnmn": "SmartThingsCommunity",
-    "vid": "17118a88-23b3-3f8d-8ddd-8ee9b75c1094",
+    "vid": "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd",
     "version": "0.0.1",
     "type": "profile",
     "dpInfo": [
@@ -24,7 +24,7 @@
         "states": [
             {
                 "component": "main",
-                "capability": "lock",
+                "capability": "windowShade",
                 "version": 1,
                 "idx": 0,
                 "group": "main",
@@ -32,7 +32,16 @@
                 "composite": false
             }
         ],
-        "actions": [],
+        "actions": [
+            {
+                "component": "main",
+                "capability": "windowShade",
+                "version": 1,
+                "idx": 0,
+                "group": "main",
+                "inline": null
+            }
+        ],
         "basicPlus": []
     },
     "detailView": [
@@ -52,7 +61,7 @@
         },
         {
             "component": "main",
-            "capability": "lock",
+            "capability": "windowShade",
             "version": 1,
             "values": [],
             "patch": []
@@ -70,7 +79,7 @@
             },
             {
                 "component": "main",
-                "capability": "lock",
+                "capability": "windowShade",
                 "version": 1,
                 "values": [],
                 "patch": [],
@@ -79,6 +88,6 @@
         ],
         "actions": []
     },
-    "presentationId": "17118a88-23b3-3f8d-8ddd-8ee9b75c1094",
+    "presentationId": "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd",
     "manufacturerName": "SmartThingsCommunity"
 }
