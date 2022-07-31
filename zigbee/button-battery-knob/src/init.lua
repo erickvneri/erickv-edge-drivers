@@ -18,6 +18,7 @@ local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
 local switch_level = require "st.capabilities".switchLevel
 local window_shade = require "st.capabilities".windowShade
 local lock = require "st.capabilities".lock
+local rotation = require "st.capabilities"["againschool57104.rotation"]
 
 local ZigbeeDriver = require "st.zigbee"
 local PowerConfiguration = require "st.zigbee.zcl.clusters".PowerConfiguration
@@ -42,7 +43,8 @@ local driver_config = {
     heating_setpoint,
     switch_level,
     window_shade,
-    lock
+    lock,
+    rotation
   },
   lifecycle_handlers = {
     init = init,
@@ -64,11 +66,10 @@ local driver_config = {
       [lock.commands.lock.NAME] = emitter.send_lock_event,
       [lock.commands.unlock.NAME] = emitter.send_lock_event
     },
-    -- TODO:Complete window shade integration
     [window_shade.ID] = {
-      [window_shade.commands.open] = emitter.send_window_shade_event,
-      [window_shade.commands.close] = emitter.send_window_shade_event,
-      [window_shade.commands.pause] = emitter.send_window_shade_event
+      [window_shade.commands.open.NAME] = emitter.send_window_shade_event,
+      [window_shade.commands.close.NAME] = emitter.send_window_shade_event,
+      [window_shade.commands.pause.NAME] = emitter.send_window_shade_event
     }
   },
   zigbee_handlers = {

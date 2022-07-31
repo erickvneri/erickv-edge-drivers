@@ -1,6 +1,6 @@
 {
     "mnmn": "SmartThingsCommunity",
-    "vid": "9cc66302-446d-3213-8e0e-1e3f7892a9a1",
+    "vid": "af1367a8-a32b-303d-b042-e25974827777",
     "version": "0.0.1",
     "type": "profile",
     "dpInfo": [
@@ -49,6 +49,13 @@
             "version": 1,
             "values": [],
             "patch": []
+        },
+        {
+            "component": "main",
+            "capability": "againschool57104.rotation",
+            "version": 1,
+            "values": [],
+            "patch": []
         }
     ],
     "automation": {
@@ -60,10 +67,18 @@
                 "values": [],
                 "patch": [],
                 "exclusion": []
+            },
+            {
+                "component": "main",
+                "capability": "againschool57104.rotation",
+                "version": 1,
+                "values": [],
+                "patch": [],
+                "exclusion": []
             }
         ],
         "actions": []
     },
-    "presentationId": "9cc66302-446d-3213-8e0e-1e3f7892a9a1",
+    "presentationId": "af1367a8-a32b-303d-b042-e25974827777",
     "manufacturerName": "SmartThingsCommunity"
 }
