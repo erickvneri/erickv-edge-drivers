@@ -17,7 +17,7 @@ components:
     capabilities:
       - id: button
         version: 1
-      - id: switchLevel
+      - id: againschool57104.rotation
         version: 1
     categories:
       - name: RemoteController
@@ -33,7 +33,7 @@ metadata:
   ocfDeviceType: x.com.st.d.remotecontroller
   deviceTypeId: RemoteController
   mnmn: "SmartThingsCommunity"
-  vid: "9cc66302-446d-3213-8e0e-1e3f7892a9a1"
+  vid: "af1367a8-a32b-303d-b042-e25974827777"
 
 preferences:
   - title: "Rotation option"
@@ -43,13 +43,13 @@ preferences:
     preferenceType: enumeration
     definition:
       options:
-        NONE: "None"
+        DEFAULT: "Default"
         LEVEL: "Level"
         COOLING_SETPOINT: "Thermostat Cooling Setpoint"
         HEATING_SETPOINT: "Thermostat Heating Setpoint"
         LOCK_UNLOCK: "Lock"
         WINDOW_SHADE: "Window Shade (blinds)"
-      default: NONE
+      default: DEFAULT
 
   - title: "Mode"
     description: "On SCENE MODE device will unicast button events. On DIMMER MODE device will broadcast messages within the Zigbee group (Warning: Events won't propagate the ecosystem, only the Zigbee network)"

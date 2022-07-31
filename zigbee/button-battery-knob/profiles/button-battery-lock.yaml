@@ -43,13 +43,13 @@ preferences:
     preferenceType: enumeration
     definition:
       options:
-        NONE: "None"
+        DEFAULT: "Default"
         LEVEL: "Level"
         COOLING_SETPOINT: "Thermostat Cooling Setpoint"
         HEATING_SETPOINT: "Thermostat Heating Setpoint"
         LOCK_UNLOCK: "Lock"
         WINDOW_SHADE: "Window Shade (blinds)"
-      default: NONE
+      default: DEFAULT
 
   - title: "Lock Rotation"
     description: "Lock Rotation (DIMMER MODE exclusive)"
