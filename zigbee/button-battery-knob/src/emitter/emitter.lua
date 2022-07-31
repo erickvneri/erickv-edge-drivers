@@ -18,7 +18,9 @@ local button = require "st.capabilities".button
 local switch_level = require "st.capabilities".switchLevel
 local cooling_setpoint = require "st.capabilities".thermostatCoolingSetpoint
 local heating_setpoint = require "st.capabilities".thermostatHeatingSetpoint
+local window_shade = require "st.capabilities".windowShade
 local lock = require "st.capabilities".lock
+local rotation = require "st.capabilities"["againschool57104.rotation"]
 
 -- button event map
 local button_event_map = {
@@ -103,6 +105,27 @@ local function send_knob_event(_, device, zbrx)
       lock_state = "locked"
     end
     push_state = lock.lock(lock_state)
+
+  elseif option == "WINDOW_SHADE" then
+    log.info("About to send Window Shade event")
+    local close_direction = prefs.closeRotation
+    local shade_state = "open"
+
+    if event == "0" and close_direction == "R" then
+      shade_state = "closed"
+    elseif event == "1" and close_direction == "L" then
+      shade_state = "closed"
+    end
+    push_state = window_shade.windowShade(shade_state)
+
+  elseif option == "DEFAULT" then
+    local rotation_state = event == "0" and "clockwise" or "counterclockwise"
+    push_state = rotation.rotation(rotation_state)
+
+    -- debounce into Standby
+    device.thread:call_with_delay(1, function()
+      device:emit_event(rotation.rotation("standby"))
+    end)
   end
 
   if push_state ~= nil then
@@ -128,11 +151,19 @@ local function send_button_event(_, device, zbrx)
   local event = tostring(zbrx.body.zcl_body):match("GenericBody:  0(%d)")
   local mapped_evt = button_event_map[tonumber(event)]
 
-  return assert(_send_device_event(
+  assert(_send_device_event(
     endpoint,
     device,
     button.button(mapped_evt),
-    true)) -- state_change
+    true), "failed to emit button event") -- state_change
+
+  if device.preferences.rotationOption == "WINDOW_SHADE" then
+    assert(_send_device_event(
+      1,
+      device,
+      window_shade.windowShade("partially open")
+    ), "failed to send windowShade.partially open event")
+  end
 end
 
 
@@ -246,7 +277,20 @@ end
 -- @param device  ZigbeeDevice
 -- @param command table
 local function send_window_shade_event(_, device, command)
-  for k,v in pairs(command) do print(k,v) end
+  local cmd = command.command
+  local state = "partially open"
+
+  if cmd == "open" then
+    state = "open"
+  elseif cmd == "close" then
+    state = "closed"
+  end
+
+  return assert(_send_device_event(
+    1, -- main
+    device,
+    window_shade.windowShade(state)
+  ))
 end
 
 

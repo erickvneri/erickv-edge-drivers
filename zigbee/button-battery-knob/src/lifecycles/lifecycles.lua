@@ -38,11 +38,12 @@ local send_zigbee_message = require "emitter".send_zigbee_message
 -- infoChanged lifecycle
 -- handler.
 local PROFILE_OPTS = {
-  NONE = "button-battery",
+  DEFAULT = "button-battery",
   COOLING_SETPOINT = "button-battery-coolingSetpoint",
   HEATING_SETPOINT = "button-battery-heatingSetpoint",
   LEVEL = "button-battery-level",
-  LOCK_UNLOCK = "button-battery-lock"
+  LOCK_UNLOCK = "button-battery-lock",
+  WINDOW_SHADE = "button-battery-windowShade"
 }
 
 
@@ -73,7 +74,8 @@ local function _set_rotation_capability_defaults(option, prefs, device)
     elseif option == "WINDOW_SHADE" then
       device:emit_event(
         window_shade.supportedWindowShadeCommands({ "open", "close", "pause" }))
-      device:emit_event(window_shade.windowShade(prefs.windowShadeState))
+      local lock_state = string.lower(prefs.windowShadeState)
+      device:emit_event(window_shade.windowShade(lock_state))
     end
 end
 
