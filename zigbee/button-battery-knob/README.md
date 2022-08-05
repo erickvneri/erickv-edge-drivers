@@ -39,3 +39,10 @@ in not having the expected interface at the SmartThings App, hence, every rotati
 i.e. if the app doesn't show the capability card into Detail View,
 the user will have the chance to set the state through the Settings
 page.
+
+### Donations
+Only if you're able and consider that you'd like to donate to this project, I'd appreciate it a lot, since we all know that most of the times free software is developed on our free time and not as a job per se. So, in case you'd like to donate, you can share some ether to
+
+```
+0xEf5e2a96593376C9b9E488CA27458Ad070f30cBE
+```
