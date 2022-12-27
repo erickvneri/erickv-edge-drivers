@@ -58,4 +58,3 @@
 
 > v1.4.3
   - Added device fingerprints.
-
