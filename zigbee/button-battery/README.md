@@ -55,3 +55,7 @@
 > v1.4.2
   - Switch Level support for Smart Knob.
   - Fixed Smart Knob presentation.
+
+> v1.4.3
+  - Added device fingerprints.
+

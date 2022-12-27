@@ -101,3 +101,83 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_4fjiwweb"
     model: "TS004F"
     deviceProfileName: button-battery
+
+  # Smart Knob
+  - id: "_TZ3000_ixla93vd/TS004F"
+    deviceLabel: "Smart Knob"
+    manufacturer: "_TZ3000_ixla93vd"
+    model: "TS004F"
+    deviceProfileName: button-battery
+
+  - id: "_TZ3000_axpdxqgu/TS0041"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_axpdxqgu"
+    model: "TS0041"
+    deviceProfileName: button
+
+  - id: "_TZ3000_5e235jpa/TS0042"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_5e235jpa"
+    model: "TS0042"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_abci1hiu/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_abci1hiu"
+    model: "TS0044"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_rco1yzb1/TS004F"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_rco1yzb1"
+    model: "TS004F"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_4upl1fcj/TS0041"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_4upl1fcj"
+    model: "TS0041"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_kjfzuycl/TS004F"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_kjfzuycl"
+    model: "TS004F"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_w4thianr/TS0043"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_w4thianr"
+    model: "TS0043"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_q68478x7/TS0041"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_q68478x7"
+    model: "TS0041"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_arfwfgoa/TS0042"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_arfwfgoa"
+    model: "TS0042"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_u3nv1jwk/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_u3nv1jwk"
+    model: "TS0044"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_mh9px7cq/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_mh9px7cq"
+    model: "TS0044"
+    deviceProfileName: 2-button-battery
+
+  - id: "_TZ3000_mjwg6a52/TS0043"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_mjwg6a52"
+    model: "TS0043"
+    deviceProfileName: 2-button-battery
+
