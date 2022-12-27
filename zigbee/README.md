@@ -63,6 +63,7 @@ zigbeeManufacturer:
   manufacturer: "_TZ3000_4fjiwweb"
   model: "TS004F"
 ```
+_(to get the full list of supported devices, refer to [fingerprints.yaml](./button-battery/fingerprints.yaml))_
 
 ### [switch-level-color-bulb](./switch-level-color-bulb)
 ```yaml
