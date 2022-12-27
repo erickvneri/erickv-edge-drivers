@@ -11,7 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: "button-battery-v1.4.3"
-packageKey: "button-battery-v1.4.3"
-permissions:
-  zigbee: {}
+zigbeeManufacturer:
+  # Smart Knob
+  - id: "_TZ3000_4fjiwweb/TS004F"
+    deviceLabel: "Smart Knob"
+    manufacturer: "_TZ3000_4fjiwweb"
+    model: "TS004F"
+    deviceProfileName: button-battery
+
+  # Smart Knob
+  - id: "_TZ3000_ixla93vd/TS004F"
+    deviceLabel: "Smart Knob"
+    manufacturer: "_TZ3000_ixla93vd"
+    model: "TS004F"
+    deviceProfileName: button-battery

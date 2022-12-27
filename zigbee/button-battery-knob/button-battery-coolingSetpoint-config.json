@@ -1,0 +1,84 @@
+{
+    "mnmn": "SmartThingsCommunity",
+    "vid": "7174c535-f2fd-3a99-8ec3-69b4ab2cbe41",
+    "version": "0.0.1",
+    "type": "profile",
+    "dpInfo": [
+        {
+            "os": "ios",
+            "dpUri": "plugin://com.samsung.ios.plugin.stplugin/assets/files/index.html",
+            "arguments": []
+        },
+        {
+            "os": "android",
+            "dpUri": "plugin://com.samsung.android.plugin.stplugin",
+            "arguments": []
+        },
+        {
+            "os": "web",
+            "dpUri": "wwst://com.samsung.one.plugin.stplugin",
+            "arguments": []
+        }
+    ],
+    "dashboard": {
+        "states": [
+            {
+                "component": "main",
+                "capability": "thermostatCoolingSetpoint",
+                "version": 1,
+                "idx": 0,
+                "group": "main",
+                "values": [],
+                "composite": false
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "component": "battery",
+            "capability": "battery",
+            "version": 1,
+            "values": [],
+            "patch": []
+        },
+        {
+            "component": "main",
+            "capability": "button",
+            "version": 1,
+            "values": [],
+            "patch": []
+        },
+        {
+            "component": "main",
+            "capability": "thermostatCoolingSetpoint",
+            "version": 1,
+            "values": [],
+            "patch": []
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "component": "main",
+                "capability": "button",
+                "version": 1,
+                "values": [],
+                "patch": [],
+                "exclusion": []
+            },
+            {
+                "component": "main",
+                "capability": "thermostatCoolingSetpoint",
+                "version": 1,
+                "values": [],
+                "patch": [],
+                "exclusion": []
+            }
+        ],
+        "actions": []
+    },
+    "presentationId": "7174c535-f2fd-3a99-8ec3-69b4ab2cbe41",
+    "manufacturerName": "SmartThingsCommunity"
+}

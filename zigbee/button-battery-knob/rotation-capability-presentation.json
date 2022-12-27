@@ -1,0 +1,80 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{rotation.value}}",
+                "alternatives": [
+                    {
+                        "key": "clockwise",
+                        "value": "Clockwise",
+                        "type": "active"
+                    },
+                    {
+                        "key": "counterclockwise",
+                        "value": "Counterclockwise",
+                        "type": "active"
+                    },
+                    {
+                        "key": "standby",
+                        "value": "Standby",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Rotation",
+            "displayType": "state",
+            "state": {
+                "label": "{{rotation.value}}",
+                "alternatives": [
+                    {
+                        "key": "clockwise",
+                        "value": "Clockwise",
+                        "type": "active"
+                    },
+                    {
+                        "key": "counterclockwise",
+                        "value": "Counterclockwise",
+                        "type": "active"
+                    },
+                    {
+                        "key": "standby",
+                        "value": "Standby",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Rotations",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "clockwise",
+                            "value": "Clockwise",
+                            "type": "active"
+                        },
+                        {
+                            "key": "counterclockwise",
+                            "value": "Counterclockwise",
+                            "type": "active"
+                        }
+                    ],
+                    "value": "rotation.value",
+                    "valueType": "string"
+                }
+            }
+        ],
+        "actions": []
+    },
+    "id": "againschool57104.rotation",
+    "version": 1
+}

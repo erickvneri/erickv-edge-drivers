@@ -1,0 +1,44 @@
+{
+    "id": "againschool57104.rotation",
+    "version": 1,
+    "status": "proposed",
+    "name": "Rotation",
+    "ephemeral": false,
+    "attributes": {
+        "rotation": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "enum": [
+                            "clockwise",
+                            "counterclockwise",
+                            "standby"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setRotation",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setRotation": {
+            "name": "setRotation",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}

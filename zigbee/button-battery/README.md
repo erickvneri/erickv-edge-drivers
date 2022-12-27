@@ -55,6 +55,6 @@
 > v1.4.2
   - Switch Level support for Smart Knob.
   - Fixed Smart Knob presentation.
-  - New fingerprints
-  - Added Switch capability for Smart Knob to provide
-    accessibility for mirror-like automations.
+
+> v1.4.3
+  - Added device fingerprints.

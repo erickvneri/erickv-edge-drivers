@@ -1,0 +1,100 @@
+# Copyright 2022 Erick Israel Vazquez Neri
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+name: button-battery-windowShade
+components:
+  - id: main
+    capabilities:
+      - id: button
+        version: 1
+      - id: windowShade
+        version: 1
+    categories:
+      - name: Blind
+
+  - id: battery
+    capabilities:
+      - id: battery
+        version: 1
+    categories:
+      - name: Blind
+metadata:
+  deviceType: Blind
+  ocfDeviceType: oic.d.blind
+  deviceTypeId: Blind
+  mnmn: "SmartThingsCommunity"
+  vid: "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd"
+
+preferences:
+  - title: "Rotation option"
+    description: "Capability that will represent rotation of Smart Knob on SCENE MODE only"
+    required: false
+    name: rotationOption
+    preferenceType: enumeration
+    definition:
+      options:
+        DEFAULT: "Default"
+        LEVEL: "Level"
+        COOLING_SETPOINT: "Thermostat Cooling Setpoint"
+        HEATING_SETPOINT: "Thermostat Heating Setpoint"
+        LOCK_UNLOCK: "Lock"
+        WINDOW_SHADE: "Window Shade (blinds)"
+      default: DEFAULT
+
+  - title: "Close Rotation"
+    description: "Close Rotation (DIMMER MODE exclusive)"
+    name: closeRotation
+    required: true
+    preferenceType: enumeration
+    definition:
+      options:
+        R: "Right"
+        L: "Left"
+      default: R
+
+  - title: "Window Shade State"
+    description: "Window Shade State"
+    name: windowShadeState
+    preferenceType: enumeration
+    definition:
+      options:
+        CLOSED: "closed"
+        OPEN: "open"
+      default: CLOSED
+
+  - title: "Mode"
+    description: "On SCENE MODE device will unicast button events. On DIMMER MODE device will broadcast messages within the Zigbee group (Warning: Events won't propagate the ecosystem, only the Zigbee network)"
+    required: true
+    name: operationMode
+    preferenceType: enumeration
+    definition:
+      options:
+        SCENE: "Scene Mode"
+        DIMMER: "Dimmer Mode"
+      default: "SCENE"
+
+  - title: "Group"
+    description: "Zigbee Group for broadcast Zigbee commands Note: this is an exclusive option for DIMMER MODE and make sure other devices are within same Group."
+    name: zigbeeGroup
+    preferenceType: integer
+    definition:
+      default: 0
+      minimum: 0
+      maximum: 65535
+
+  - title: "Override Group On Update"
+    description: "With this option you can decide either to keep the associated Zigbee Group or remove device from the Group(s) on the \"Group\" has been redefined."
+    name: overrideGroupOnUpdate
+    preferenceType: boolean
+    definition:
+      default: true

@@ -1,0 +1,93 @@
+{
+    "mnmn": "SmartThingsCommunity",
+    "vid": "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd",
+    "version": "0.0.1",
+    "type": "profile",
+    "dpInfo": [
+        {
+            "os": "ios",
+            "dpUri": "plugin://com.samsung.ios.plugin.stplugin/assets/files/index.html",
+            "arguments": []
+        },
+        {
+            "os": "android",
+            "dpUri": "plugin://com.samsung.android.plugin.stplugin",
+            "arguments": []
+        },
+        {
+            "os": "web",
+            "dpUri": "wwst://com.samsung.one.plugin.stplugin",
+            "arguments": []
+        }
+    ],
+    "dashboard": {
+        "states": [
+            {
+                "component": "main",
+                "capability": "windowShade",
+                "version": 1,
+                "idx": 0,
+                "group": "main",
+                "values": [],
+                "composite": false
+            }
+        ],
+        "actions": [
+            {
+                "component": "main",
+                "capability": "windowShade",
+                "version": 1,
+                "idx": 0,
+                "group": "main",
+                "inline": null
+            }
+        ],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "component": "battery",
+            "capability": "battery",
+            "version": 1,
+            "values": [],
+            "patch": []
+        },
+        {
+            "component": "main",
+            "capability": "button",
+            "version": 1,
+            "values": [],
+            "patch": []
+        },
+        {
+            "component": "main",
+            "capability": "windowShade",
+            "version": 1,
+            "values": [],
+            "patch": []
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "component": "main",
+                "capability": "button",
+                "version": 1,
+                "values": [],
+                "patch": [],
+                "exclusion": []
+            },
+            {
+                "component": "main",
+                "capability": "windowShade",
+                "version": 1,
+                "values": [],
+                "patch": [],
+                "exclusion": []
+            }
+        ],
+        "actions": []
+    },
+    "presentationId": "b8ad4a69-06c8-3dbb-b23b-60a8acb4e2cd",
+    "manufacturerName": "SmartThingsCommunity"
+}
