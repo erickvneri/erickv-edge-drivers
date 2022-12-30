@@ -58,3 +58,7 @@
 
 > v1.4.3
   - Added device fingerprints.
+
+> v1.4.4
+  - Fixed profile fingerprints.
+  - Added device fingerprints.
