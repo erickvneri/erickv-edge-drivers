@@ -198,7 +198,7 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_adkvzooy"
     model: "TS0042"
     deviceProfileName: 2-button-battery
-    
+
   # MOES star ring 4-Button Scene Switch
   - id: "_TZ3000_a4xycprs/TS0044"
     deviceLabel: "Moes Scene Switch"
