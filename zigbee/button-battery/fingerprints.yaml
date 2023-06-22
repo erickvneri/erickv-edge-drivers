@@ -206,3 +206,9 @@ zigbeeManufacturer:
     model: "TS0044"
     deviceProfileName: 4-button-battery
 
+  # tuya YSR-ZSW 3-Button Wireless Remote Switch
+  - id: "_TZ3000_w3c7ouru/TS0043"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_w3c7ouru"
+    model: "TS0043"
+    deviceProfileName: 3-button-battery
