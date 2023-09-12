@@ -2,5 +2,4 @@
 
 ### Index
 
-- [Zigbee Edge Drivers](./zigbee)
-- [LAN Edge Drivers](./lan)
+-   [Zigbee Edge Drivers](./zigbee)

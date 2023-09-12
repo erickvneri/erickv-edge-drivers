@@ -1,0 +1,76 @@
+# Copyright 2023 erickvneri
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+name: default
+components:
+  - id: main
+    capabilities:
+      - id: switch
+        version: 1
+      - id: switchLevel
+        version: 1
+      - id: colorControl
+        version: 1
+      - id: refresh
+        version: 1
+    categories:
+      - name: Light
+
+metadata:
+  deviceType: Light
+  ocfDeviceType: oic.d.light
+  deviceTypeId: Light
+
+preferences:
+  # user-defined option to allow transition
+  # of switch level states based on time (seconds)
+  - title: "Transition time (in seconds)"
+    name: transitionTime
+    description: "Time-lapse to change from the current level state to a new level"
+    required: false
+    preferenceType: number
+    definition:
+      # default as arg2 in Level.MoveToLevelWithOnOff cluster command
+      default: 0
+      minimum: 0
+      # maximum 16-bit integer (0xFFFF)
+      maximum: 65535
+
+  # user-defined option to allow fade
+  # light on switch actions (on/off)
+  #- title: "Transition on switch"
+  #name: transitionOnSwitch
+  #required: false
+  #preferenceType: boolean
+  #definition:
+  #default: false
+
+  # zigbee group for network-based
+  # command handling.
+  - title: "Group"
+    description: "Zigbee Group for broadcast Zigbee commands Note: this is an exclusive option for DIMMER MODE and make sure other devices are within same Group."
+    name: zigbeeGroup
+    preferenceType: integer
+    definition:
+      default: 0
+      minimum: 0
+      maximum: 65535
+
+  # allows to override the enrolled
+  # zigbee group after a new one is set
+  - title: "Override Group On Update"
+    description: 'With this option you can decide either to keep the associated Zigbee Group or remove device from the Group(s) on the "Group" has been redefined.'
+    name: overrideGroupOnUpdate
+    preferenceType: boolean
+    definition:
+      default: true
