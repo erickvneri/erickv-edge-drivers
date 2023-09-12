@@ -1,11 +1,11 @@
-name: "SmartThings Edge Development Deployment"
-run-name: "${{ github.actor }} deploying to development channel"
+name: "SmartThings Edge Production Deployment"
+run-name: "${{ github.actor }} deploying to production channel"
 on:
   push:
     branches:
       - main
 jobs:
-  deploy-dev:
+  deploy-production:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout Code"
