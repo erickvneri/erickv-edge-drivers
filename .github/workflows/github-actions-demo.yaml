@@ -1,6 +1,9 @@
 name: "SmartThings Edge Development Deployment"
 run-name: "${{ github.actor }} deploying to development channel"
-on: ["push"]
+on:
+  push:
+    branches:
+      - develop
 jobs:
   deploy-dev:
     runs-on: "ubuntu-latest"
