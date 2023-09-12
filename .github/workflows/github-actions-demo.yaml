@@ -1,0 +1,51 @@
+name: "SmartThings Edge Development Deployment"
+run-name: "${{ github.actor }} deploying to development channel"
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  deploy-dev:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout Code"
+        uses: "actions/checkout@v3"
+
+      - name: "SmartThings CLI"
+        uses: "actions/setup-node@v2"
+      - run: "npm install --global @smartthings/cli"
+
+      - name: "Setup JQ"
+        uses: "actions/checkout@v3"
+      - run: "sudo apt update && sudo apt install jq"
+
+      - name: "Upgrade Edge Drivers"
+        uses: "actions/checkout@v3"
+      - run: |
+          DRIVERS_PATH=${{ github.workspace }}/zigbee;
+          TARGET_CHANNEL=${{ secrets.ST_CHANNEL_DEVELOP }};
+          TOKEN=${{ secrets.ST_PAT }};
+
+          deploy () {
+            DRIVER_FOLDER=$1;
+
+            pushd "$DRIVERS_PATH/$DRIVER_FOLDER";
+            DRIVER_UUID=$(
+              smartthings edge:drivers:package --json --token $TOKEN | \
+              jq .driverId | \
+              tr -d '"'
+            );
+            echo "driver $DRIVER_FOLDER:$DRIVER_UUID packaged correctly";
+
+            smartthings edge:channels:assign "$DRIVER_UUID" \
+              --channel $TARGET_CHANNEL \
+              --token $TOKEN \
+              && echo "driver $1:$DRIVER_UUID released correctly";
+
+            popd;
+          }
+
+          cd $DRIVERS_PATH;
+          for DRIVER_DIR in $(ls -d */); do
+            deploy $DRIVER_DIR
+          done
