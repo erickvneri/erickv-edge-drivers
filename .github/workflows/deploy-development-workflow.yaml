@@ -22,4 +22,26 @@ jobs:
           TARGET_CHANNEL=${{ secrets.ST_CHANNEL_DEVELOP }};
           TOKEN=${{ secrets.ST_PAT }};
 
-          ./deploy.sh $DRIVERS_PATH $TARGET_CHANNEL $TOKEN;
+          deploy () {
+            DRIVER_FOLDER=$1;
+
+            pushd "$DRIVERS_PATH/$DRIVER_FOLDER";
+            DRIVER_UUID=$(
+              smartthings edge:drivers:package --json --token $TOKEN | \
+              jq .driverId | \
+              tr -d '"'
+            );
+            echo "driver $DRIVER_FOLDER:$DRIVER_UUID packaged correctly";
+
+            smartthings edge:channels:assign "$DRIVER_UUID" \
+              --channel $TARGET_CHANNEL \
+              --token $TOKEN \
+              && echo "driver $DRIVER_FOLDER$DRIVER_UUID released correctly";
+
+            popd;
+          }
+
+          cd $DRIVERS_PATH;
+          for DRIVER_DIR in $(ls -d */); do
+            deploy $DRIVER_DIR
+          done
