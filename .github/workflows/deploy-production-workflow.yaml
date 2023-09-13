@@ -15,10 +15,6 @@ jobs:
         uses: "actions/setup-node@v2"
       - run: "npm install --global @smartthings/cli"
 
-      - name: "Setup JQ"
-        uses: "actions/checkout@v3"
-      - run: "sudo apt update && sudo apt install jq"
-
       - name: "Upgrade Edge Drivers"
         uses: "actions/checkout@v3"
       - run: |
