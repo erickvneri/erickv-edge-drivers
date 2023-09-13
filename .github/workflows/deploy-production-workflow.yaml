@@ -35,12 +35,12 @@ jobs:
               jq .driverId | \
               tr -d '"'
             );
-            echo "driver $DRIVER_FOLDER:$DRIVER_UUID packaged correctly";
+            echo "driver $DRIVER_FOLDER$DRIVER_UUID packaged correctly";
 
             smartthings edge:channels:assign "$DRIVER_UUID" \
               --channel $TARGET_CHANNEL \
               --token $TOKEN \
-              && echo "driver $1:$DRIVER_UUID released correctly";
+              && echo "driver $DRIVER_FOLDER$DRIVER_UUID released correctly";
 
             popd;
           }
