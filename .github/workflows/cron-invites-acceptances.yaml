@@ -2,7 +2,7 @@ name: "Channel Invites Acceptances (develop)"
 run-name: "cron to review acceptances (develop)"
 on:
   schedule:
-    - cron: "31 * * * *"
+  - cron: "*/30 * * * *"
   #- cron: "0 0 * * 0"
 
 jobs:
@@ -31,6 +31,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: |
+          git config --global user.email "erickvneri@github";
+          git config --global user.name "erickvneri";
+
           ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
           git add README.md && \
           git commit -m "cron: update acceptances count" && \
@@ -43,6 +46,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: |
+          git config --global user.email "erickvneri@github";
+          git config --global user.name "erickvneri";
+
           ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
           git add README.md && \
           git commit -m "cron: update acceptances count" && \
