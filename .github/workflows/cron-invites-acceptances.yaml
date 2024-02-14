@@ -1,0 +1,49 @@
+name: "Channel Invites Acceptances (develop)"
+run-name: "cron to review acceptances (develop)"
+on:
+  schedule:
+    - cron: "31 * * * *"
+  #- cron: "0 0 * * 0"
+
+jobs:
+  cron:
+    runs-on: "ubuntu-latest"
+    env:
+      INVITE_PROD: ${{ secrets.ST_INVITE_PRODUCTION }}
+      INVITE_DEV: ${{ secrets.ST_INVITE_DEVELOP }}
+      ST_TOKEN: ${{ secrets.ST_PAT }}
+    steps:
+      - name: "setup smartthings cli"
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "20.9.0"
+      - run: "npm install --global @smartthings/cli@1.8.0"
+
+      - name: "setup python"
+        uses: "actions/setup-python@v3"
+        with:
+          python-version: 3.11
+
+      - name: "update channel information"
+        uses: "actions/checkout@v3"
+        with:
+          ref: "develop"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: |
+          ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
+          git add README.md && \
+          git commit -m "cron: update acceptances count" && \
+          git push;
+
+      - name: "update channel information"
+        uses: "actions/checkout@v3"
+        with:
+          ref: "main"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: |
+          ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
+          git add README.md && \
+          git commit -m "cron: update acceptances count" && \
+          git push;
