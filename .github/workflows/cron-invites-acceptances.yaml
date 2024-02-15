@@ -2,8 +2,7 @@ name: "Channel Invites Acceptances (develop)"
 run-name: "cron to review acceptances (develop)"
 on:
   schedule:
-  - cron: "*/30 * * * *"
-  #- cron: "0 0 * * 0"
+  - cron: "0 0 * * 0"
 
 jobs:
   cron:
@@ -24,30 +23,30 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: "update channel information"
+      - name: "update dev channel information"
         uses: "actions/checkout@v3"
         with:
           ref: "develop"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: |
-          git config --global user.email "erickvneri@github";
-          git config --global user.name "erickvneri";
+          git config user.email "erickvneri@github";
+          git config user.name "erickvneri";
 
           ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
           git add README.md && \
           git commit -m "cron: update acceptances count" && \
           git push;
 
-      - name: "update channel information"
+      - name: "update production channel information"
         uses: "actions/checkout@v3"
         with:
           ref: "main"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - run: |
-          git config --global user.email "erickvneri@github";
-          git config --global user.name "erickvneri";
+          git config user.email "erickvneri@github";
+          git config user.name "erickvneri";
 
           ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
           git add README.md && \

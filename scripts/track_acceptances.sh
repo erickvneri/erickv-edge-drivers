@@ -19,7 +19,7 @@ template = '''
 - **Terms URL**: {}
 - **Acceptances**: {}
 
-<a href=\"{}\">Accept Invite</a>
+<a href={}>Accept Invite</a>
 
 '''
 
