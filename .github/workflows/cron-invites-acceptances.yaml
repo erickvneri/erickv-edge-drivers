@@ -48,7 +48,7 @@ jobs:
           git config user.email "erickvneri@github";
           git config user.name "erickvneri";
 
-          ./scripts/track_acceptances.sh $INVITE_DEV $ST_TOKEN && \
+          ./scripts/track_acceptances.sh $INVITE_PROD $ST_TOKEN && \
           git add README.md && \
           git commit -m "cron: update acceptances count" && \
           git push;
