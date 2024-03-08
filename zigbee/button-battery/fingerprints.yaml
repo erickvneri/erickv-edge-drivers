@@ -219,3 +219,10 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_qgwcxxws"
     model: "TS0041"
     deviceProfileName: button-battery
+
+   # Yet another button from TEMU
+  - id: "_TZ3000_8rppvwda/TS0041"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_8rppvwda"
+    model: "TS0041"
+    deviceProfileName: button-battery
