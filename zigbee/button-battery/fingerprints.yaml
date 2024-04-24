@@ -69,10 +69,10 @@ zigbeeManufacturer:
     model: "TS0043"
     deviceProfileName: 3-button-battery
 
-  # LoraTap 3-Button Remote
+  # LoraTap 3-Button Remote (alt)`
   - id: "_TZ3000_famkxci2/TS0043"
     deviceLabel: "Scene Switch"
-    manufacturer: "_TZ3000_bi6lpsew"
+    manufacturer: "_TZ3000_famkxci2"
     model: "TS0043"
     deviceProfileName: 3-button-battery
 
