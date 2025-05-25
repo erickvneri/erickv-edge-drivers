@@ -338,3 +338,10 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_vn88ezar"
     model: "TS0041"
     deviceProfileName: 3-button-battery
+
+  # https://community.smartthings.com/t/st-edge-zigbee-driver-for-moes-4-button-scene-switch-ts004f-plus-some-smart-knob-models/237808/463
+  - id: "_TZ3000_zgyzgdua/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_zgyzgdua"
+    model: "TS0044"
+    deviceProfileName: 4-button-battery
