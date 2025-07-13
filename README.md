@@ -6,7 +6,7 @@
 - **Owner**: "@erickv"
 - **Description**: "Development versions of my shared drivers available at \"@erickv Shared Drivers\""
 - **Terms URL**: "https://github.com/erickvneri/erickv-edge-drivers/tree/develop"
-- **Acceptances**: 602
+- **Acceptances**: 615
 
 <a href="https://bestow-regional.api.smartthings.com/invite/Q1jP18n4oZML">Accept Invite</a>
 
