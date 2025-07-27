@@ -39,3 +39,10 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_qja6nq5z"
     model: "TS004F"
     deviceProfileName: button-battery
+
+  # https://community.smartthings.com/t/re-st-edge-zigbee-driver-for-moes-4-button-scene-switch-ts004f/245394/11
+  - id: "SYMFONISK_Sound_Controller/IKEA_of_Sweden"
+    deviceLabel: "IKEA of Sweden"
+    manufacturer: "IKEA of Sweden"
+    model: "SYMFONISK Sound Controller"
+    deviceProfileName: button-battery
