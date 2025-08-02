@@ -358,3 +358,10 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_qous95zh"
     model: "TS0042"
     deviceProfileName: 2-button-battery
+
+  # https://community.smartthings.com/t/re-version-5-of-the-edge-beta-driver-zigbee-switch-mc/259895
+  - id: "_TZ3000_xkwalgne/TS0041"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TZ3000_xkwalgne"
+    model: "TS0041"
+    deviceProfileName: button-battery
