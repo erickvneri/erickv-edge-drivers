@@ -365,3 +365,9 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_xkwalgne"
     model: "TS0041"
     deviceProfileName: button-battery
+
+  - id: "HOBEIAN/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "HOBEIAN"
+    model: "TS0044"
+    deviceProfileName: 4-button-battery
