@@ -365,3 +365,9 @@ zigbeeManufacturer:
     manufacturer: "_TZ3000_xkwalgne"
     model: "TS0041"
     deviceProfileName: button-battery
+
+  - id: "_TZ3000_kaflzta4/TS004F"
+    deviceLabel: "Scene Switch"
+    manufactuer: "_TZ3000_kaflzta4"
+    model: "TS004F"
+    deviceProfileName: button-battery
