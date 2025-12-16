@@ -2,13 +2,13 @@
 
 ### Channel
 
-- **Name**: "@erickv Shared Drivers"
+- **Name**: "dev-@erickv Shared Drivers"
 - **Owner**: "@erickv"
-- **Description**: "This channel has a few of my personal Edge Drivers for some Zigbee and in the future, LAN devices."
-- **Terms URL**: "https://github.com/erickvneri/erickv-edge-drivers"
-- **Acceptances**: 5477
+- **Description**: "Development versions of my shared drivers available at \"@erickv Shared Drivers\""
+- **Terms URL**: "https://github.com/erickvneri/erickv-edge-drivers/tree/develop"
+- **Acceptances**: 799
 
-<a href="https://bestow-regional.api.smartthings.com/invite/Q1jP18n4oZML">Accept Invite</a>
+<a href="https://bestow-regional.api.smartthings.com/invite/pbMvQvqgpGjO">Accept Invite</a>
 
 
 ### Index
