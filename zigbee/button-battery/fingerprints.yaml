@@ -160,10 +160,10 @@ zigbeeManufacturer:
     deviceProfileName: button-battery
 
   - id: "_TZ3000_kjfzuycl/TS004F"
-    deviceLabel: "Scene Switch"
+    deviceLabel: "Waterproof Button (IP55)"
     manufacturer: "_TZ3000_kjfzuycl"
     model: "TS004F"
-    deviceProfileName: 2-button-battery
+    deviceProfileName: button-battery
 
   - id: "_TZ3000_w4thianr/TS0043"
     deviceLabel: "Scene Switch"
