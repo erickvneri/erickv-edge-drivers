@@ -419,3 +419,10 @@ zigbeeManufacturer:
     manufacturer: "__TZ3000_j70oanab"
     model: "TS0044"
     deviceProfileName: 4-button-battery
+
+  # https://github.com/erickvneri/erickv-edge-drivers/issues/7
+  - id: "_TYZB01_cnlmkhbk/TS0044"
+    deviceLabel: "Scene Switch"
+    manufacturer: "_TYZB01_cnlmkhbk"
+    model: "TS0044"
+    deviceProfileName: 4-button-battery
