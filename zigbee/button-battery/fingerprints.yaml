@@ -309,7 +309,7 @@ zigbeeManufacturer:
     deviceLabel: "Scene Switch"
     manufacturer: "_TZ3000_kfu8zapd"
     model: "TS0044"
-    deviceProfileName: button-battery
+    deviceProfileName: 4-button-battery
 
   # https://community.smartthings.com/t/st-edge-zigbee-driver-for-moes-4-button-scene-switch-ts004f-plus-some-smart-knob-models/237808/424
   - id: "TZ3000_adndolvx/TS0041"
