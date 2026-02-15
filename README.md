@@ -2,13 +2,13 @@
 
 ### Channel
 
-- **Name**: "@erickv Shared Drivers"
-- **Owner**: "@erickv"
-- **Description**: "This channel has a few of my personal Edge Drivers for some Zigbee and in the future, LAN devices."
-- **Terms URL**: "https://github.com/erickvneri/erickv-edge-drivers"
-- **Acceptances**: 0
+- **Name**: "@erickv Zigbee Drivers (2026-02-09)"
+- **Owner**: "https://it.taskee.space (community:erickv / github:erickvneri)"
+- **Description**: "This refreshes the @erickv Shared Drivers invite"
+- **Terms URL**: "https://it.taskee.space"
+- **Acceptances**: 5
 
-<a href="https://bestow-regional.api.smartthings.com/invite/Q1jP18n4oZML">Accept Invite</a>
+<a href="https://bestow-regional.api.smartthings.com/invite/5z2RNEq6Av21">Accept Invite</a>
 
 
 ### Index
